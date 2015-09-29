@@ -192,19 +192,14 @@ int main(int argc, char **argv)
 	ray_t *sr;
 
 
-	int x, y;
-	int bx, by;
-	int current_pixel;
-	int total_pixels;
-
-	bx = bmp->getwidth();
-	by = bmp->getheight();
+	const int bx = bmp->getwidth();
+	const int by = bmp->getheight();
 	scene_t *scene = scene_init(bx, by, 8);
 
-	total_pixels = (bx*by);
+	const int total_pixels = (bx*by);
 
-	for (y = 0; y < by; y++) {
-		for (x = 0; x < bx; x++) {
+	for (int y = 0; y < by; y++) {
+		for (int x = 0; x < bx; x++) {
 			rt_color.x1 = 0;
 			rt_color.x2 = 0;
 			rt_color.x3 = 0;
@@ -226,7 +221,7 @@ int main(int argc, char **argv)
 			bmp->setpixel(x, y, clr);
 			delete sr;
 		}
-		current_pixel = (bx*y + x);
+		const int current_pixel = (bx*y + bx);
 		printf("Completed %d of %d pixels.\t\t(%-6.4g%%)\r", current_pixel, total_pixels, ((double)100*current_pixel)/total_pixels);
 	}
     printf("\n");

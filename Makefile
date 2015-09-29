@@ -1,7 +1,7 @@
-# Project: 214rt.
+# Project: simple-raytracer
 CC = g++
-BIN = 214rt
-CFLAGS = -O3 -Wall -std=c++11 -march=native -o $(BIN)
+BIN = simple-raytracer
+CFLAGS = -O3 -Wall -std=c++11 -march=native
 SRC = \
 	214rt.cpp \
 	bitmap.cpp \
@@ -13,9 +13,9 @@ SRC = \
 	scene.cpp \
 	vec.cpp
 
-HPP = \
-	color.hpp \
-	bitmap.hpp
+SRCDIR = src/
+
+FP_SRC = $(addprefix $(SRCDIR), $(SRC))
 
 DOXYCONF = Doxyfile
 
@@ -30,8 +30,8 @@ clean:
 doc: $(DOXYCONF)
 	doxygen $(DOXYCONF)
 
-$(DOXYCONF): $(SRC) $(HPP)
+$(DOXYCONF): $(FP_SRC)
 	doxygen -g $(DOXYCONF)
 
-$(BIN): $(SRC)
-	$(CC) $(CFLAGS) $(SRC)
+$(BIN): $(FP_SRC)
+	$(CC) $(CFLAGS) -o $@ $^

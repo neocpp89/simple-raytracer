@@ -33,7 +33,7 @@ bitmap::bitmap(int x, int y)
 	bi.biclrimportant = 0;
 
 	datasize = bi.biwidth * bi.biheight * sizeof(b24bitpixel_t);
-	filesize = 4 * (int)(ceil((24 * x) / 32.0)) * y + 54;	//24pp
+	filesize = 4 * (int)(ceil((24 * x) / 32.0)) * y + 54;	//24bpp
 
 	return;
 }
