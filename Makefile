@@ -1,7 +1,7 @@
 # Project: 214rt.
 CC = g++
 BIN = 214rt
-CFLAGS = -o $(BIN)
+CFLAGS = -O3 -Wall -std=c++11 -march=native -o $(BIN)
 SRC = \
 	214rt.cpp \
 	bitmap.cpp \
