@@ -191,8 +191,8 @@ int main(int argc, char **argv)
 	ray_t *sr;
 
 
-	const int bx = bmp->getwidth();
-	const int by = bmp->getheight();
+	const int bx = bmp->get_width();
+	const int by = bmp->get_height();
 	scene_t *scene = scene_init(bx, by, 8);
 
 	const int total_pixels = (bx*by);
@@ -217,7 +217,7 @@ int main(int argc, char **argv)
 				rgb->blue = 255;
 			}
 			clr->setrgb(rgb->red, rgb->green, rgb->blue);
-			bmp->setpixel(x, y, clr);
+			bmp->set_pixel(x, y, clr);
 			delete sr;
 		}
 		const int current_pixel = (bx*y + bx);
@@ -225,7 +225,7 @@ int main(int argc, char **argv)
 	}
     printf("\n");
 
-	bmp->writefile("output.bmp");
+	bmp->write_file("output.bmp");
 
 	delete rgb;
 	delete clr;

@@ -9,20 +9,22 @@ namespace SimpleRaytracer {
 class Bitmap
 {	public:
 		Bitmap(int x, int y);
-		~Bitmap();
 
-		void setpixel(int x, int y, color *c);
-		color *getpixel(int x, int y) const;
-		void writefile(const char *file);
-		int getwidth();
-		int getheight();
+		void set_pixel(int x, int y, color *c);
+		color *get_pixel(int x, int y) const;
+		void write_file(const char *file) const;
+		const int get_width() const;
+		const int get_height() const;
 
 	private:
-		b24bitpixel_t *data;
+        int width_;
+        int height_;
+
+		std::vector<b24bitpixel_t> data_;
+
 		bfheader_t bf;
 		biheader_t bi;
 		int datasize;
-
 		int filesize;
 };
 
