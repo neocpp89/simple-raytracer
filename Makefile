@@ -12,6 +12,7 @@ SRC = \
 	light.cpp \
 	numeric.cpp \
 	ray.cpp \
+    Screen.cpp \
 	scene.cpp \
 	vec.cpp
 

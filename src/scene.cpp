@@ -121,6 +121,7 @@ scene_t *scene_init(int x, int y, double zoom)
 	s->objects[i]->object.sphere->radius = 75;
 	i++;
 
+    /*
 	s->objects[i] = new fnobject_t;
 	s->objects[i]->type = FNSPHERE;
 	s->objects[i]->lambertian = 0.1;
@@ -130,6 +131,7 @@ scene_t *scene_init(int x, int y, double zoom)
 	s->objects[i]->object.sphere->origin = v(0, 50, 50);
 	s->objects[i]->object.sphere->radius = 25;
 	i++;
+    */
 
 	s->objects[i] = new fnobject_t;
 	s->objects[i]->type = FNSPHERE;
@@ -169,7 +171,7 @@ scene_t *scene_init(int x, int y, double zoom)
 	s->objects[i]->reflectivity = 0.9;
 	s->objects[i]->color = v(0x20, 0x20, 0x20);
 	s->objects[i]->object.implicit = new implicit_t;
-	s->objects[i]->object.implicit->origin = v(0, -50, 25);
+	s->objects[i]->object.implicit->origin = v(0, 50, 50);
 	s->objects[i]->object.implicit->scale = 20;
 	s->objects[i]->object.implicit->bounding_radius= 1.5 * s->objects[i]->object.implicit->scale;
 	s->objects[i]->object.implicit->fn = &hfn;
@@ -240,3 +242,15 @@ scene_t *scene_init(int x, int y, double zoom)
 
 	return s;
 }
+
+namespace SimpleRaytracer {
+
+int Scene::indexof(int i, int j) const
+{
+    if (i <= 0 || i >= screen_.rows() || j <= 0 || j >= screen_.columns()) {
+        return 0;
+    }
+    return (i * screen_.columns() + j);
+}
+
+} // namespace SimpleRaytracer

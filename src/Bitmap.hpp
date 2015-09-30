@@ -11,8 +11,8 @@ class Bitmap
     public:
         Bitmap(int x, int y);
 
-        const int width() const { return width_; }
-        const int height() const { return height_; }
+        int width() const { return width_; }
+        int height() const { return height_; }
 
         void set_pixel(int x, int y, const RGBColor &c);
         RGBColor get_pixel(int x, int y) const;

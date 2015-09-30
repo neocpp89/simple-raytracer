@@ -1,4 +1,4 @@
-#include "Camera.hpp"
+#include "Screen.hpp"
 using Point3 = SimpleRaytracer::Point3;
 
 #include "catch.hpp"

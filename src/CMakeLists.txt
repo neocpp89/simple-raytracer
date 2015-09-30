@@ -8,6 +8,7 @@ SET(LIB_SOURCES
         light.cpp
         numeric.cpp
         ray.cpp
+        Screen.cpp
         scene.cpp
         vec.cpp)
 ADD_LIBRARY(srt ${LIB_SOURCES})

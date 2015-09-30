@@ -11,10 +11,14 @@ namespace SimpleRaytracer {
     sphere at any given scalar multiple of the direction.
 
     If this time is nonimaginary, we are either inside the sphere, or
-    we are hitting it from the outside.
+    we are hitting it from the outside. If the time is negative, we are
+    inside the sphere.
 */
-Intersection Sphere::Intersect(const Point3 &origin, const Vector3 &direction) const
+Intersection Sphere::Intersect(const Ray &ray) const
 {
+    const Point3 origin = ray.origin();
+    const Vector3 direction = ray.direction();
+
 	const Vector3 vp = origin - center_;
 	const double a = direction.dot(direction);
 	const double b = 2*direction.dot(vp);
@@ -52,7 +56,7 @@ Intersection Sphere::Intersect(const Point3 &origin, const Vector3 &direction) c
 	const double s = 1.0/radius_;
 	Vector3 surface_normal = s * (point - center_);
 
-	return Intersection(hit, point, surface_normal);
+	return Intersection(hit, t, point, surface_normal);
 }
 
 } // namespace SimpleRaytracer

@@ -4,6 +4,7 @@
 #include "Color.hpp"
 #include "Point3.hpp"
 #include "Vector3.hpp"
+#include "Ray.hpp"
 
 namespace SimpleRaytracer {
 
@@ -11,20 +12,19 @@ class Intersection
 {
     public:
         Intersection(bool hit = false)
-            : hit_(hit), point_({0,0,0}), surface_normal_({0,0,0}), refracted_(0,0,0) {}
-        Intersection(bool hit, const Point3 &point, const Vector3 &surface_normal)
-            : hit_(hit), point_(point), surface_normal_(surface_normal), refracted_(0,0,0) {}
-        Intersection(bool hit, const Point3 &point, const Vector3 &surface_normal, const Vector3 &refracted)
-            : hit_(hit), point_(point), surface_normal_(surface_normal), refracted_(refracted) {}
+            : hit_(hit), time_(0), point_({0,0,0}), surface_normal_({0,0,0}) {} 
+        Intersection(bool hit, double time, const Point3 &point, const Vector3 &surface_normal)
+            : hit_(hit), time_(time), point_(point), surface_normal_(surface_normal) {}
         bool hit() const { return hit_; }
+        double time() const { return time_; }
         Point3 point() const { return point_; }
         Vector3 surface_normal() const { return surface_normal_; }
 
     private:
         const bool hit_;
+        const double time_;
         const Point3 point_;
         const Vector3 surface_normal_;
-        const Vector3 refracted_;
 };
 
 class MaterialProperties
@@ -48,12 +48,12 @@ class SceneObject
 {
     public:
         SceneObject(const MaterialProperties &properties) : properties_(properties) {}
-        virtual ~SceneObject() {};
+        virtual ~SceneObject() {}
         /*
             This is important: the direction should be normalized before
             the intersection code is called.
         */
-        virtual Intersection Intersect(const Point3 &origin, const Vector3 &direction) const = 0;
+        virtual Intersection Intersect(const Ray &ray) const = 0;
 
     private:
         MaterialProperties properties_;
@@ -67,7 +67,7 @@ class Sphere : public SceneObject
     public:
         Sphere(const Point3 &center, const double radius, const MaterialProperties &properties)
             : SceneObject(properties), center_(center), radius_(radius) {}
-        Intersection Intersect(const Point3 &origin, const Vector3 &direction) const;
+        Intersection Intersect(const Ray &ray) const;
 
     private:
         const Point3 center_;

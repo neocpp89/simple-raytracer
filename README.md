@@ -9,7 +9,7 @@ I am currently (Sep 2015) updating the program to use more modern C++, and have 
 [0]: http://www.cmake.org/
 
 Build and Install
-=================
+-----------------
 
 `simple-raytracer` doesn't have any external dependencies, and there is an included Makefile in the top-level directory which should generate the `simple-raytracer` executable.
 
@@ -24,7 +24,7 @@ Running a `make install` in the build directory will produce the executable `sim
 This is tunable by setting `CMAKE_INSTALL_PREFIX` during the cmake step, e.g. `cmake -DCMAKE_INSTALL_PREFIX=/usr` to install under `/usr/bin/simple-raytracer`.
 
 Other Components
-================
+----------------
 
 I wrote most of the code contained within this repository; the main exception is the unit testing framework [catch][1], which I did not write.
 
