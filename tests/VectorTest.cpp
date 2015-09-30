@@ -3,14 +3,14 @@ using Vector3 = SimpleRaytracer::Vector3;
 
 #include "catch.hpp"
 
-TEST_CASE("Assignment", "[assign]") {
+TEST_CASE("Vector 3Assignment", "[assign]") {
     Vector3 A = {100, 24, 23.2};
     REQUIRE(A.x() == 100);
     REQUIRE(A.y() == 24);
     REQUIRE(A.z() == 23.2);
 }
 
-TEST_CASE("Operators", "[operators]") {
+TEST_CASE("Vector3 Operators", "[operators]") {
     Vector3 A = {100, 24, 23.2};
     Vector3 B = {100, 24, 23.2};
     Vector3 C = {0, 0, 0};
@@ -50,7 +50,7 @@ TEST_CASE("Operators", "[operators]") {
 }
 
 
-TEST_CASE("Normalization", "[operators]") {
+TEST_CASE("Vector3 Normalization", "[operators]") {
     Vector3 A = {3, 4, 0};
     Vector3 B = {5, 12, 0};
     Vector3 C = {0.5, 0, 0};
@@ -84,7 +84,7 @@ TEST_CASE("Normalization", "[operators]") {
     }
 }
 
-TEST_CASE("Dot Product", "[operators]") {
+TEST_CASE("Vector3 Dot Product", "[operators]") {
     Vector3 A = {3, 4, 0};
     Vector3 B = {5, 12, 0};
 
