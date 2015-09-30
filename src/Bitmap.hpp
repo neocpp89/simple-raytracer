@@ -10,11 +10,22 @@ class Bitmap
 {	public:
 		Bitmap(int x, int y);
 
-		void set_pixel(int x, int y, color *c);
-		color *get_pixel(int x, int y) const;
-		void write_file(const char *file) const;
 		const int get_width() const;
 		const int get_height() const;
+
+		void set_pixel(int x, int y, color *c);
+		color *get_pixel(int x, int y) const;
+
+        /*
+            Be careful with this, it actually will fail if we don't run this on a
+            little-endian machine, since BMP format uses little endian.
+
+            The only way you'll know is that the bitmap won't have the magic header
+            'BM' at the beginning of the file.
+
+            I haven't thought of a good way to fix this yet.
+        */
+		void write_file(const char *file) const;
 
 	private:
         int width_;
@@ -22,10 +33,10 @@ class Bitmap
 
 		std::vector<b24bitpixel_t> data_;
 
-		bfheader_t bf;
-		biheader_t bi;
-		int datasize;
-		int filesize;
+		bfheader_t bf_;
+		biheader_t bi_;
+		int datasize_;
+		int filesize_;
 };
 
 } // namespace SimpleRaytracer
