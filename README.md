@@ -22,3 +22,10 @@ However, for out-of-tree builds you can run the usual cmake build sequence from 
 
 Running a `make install` in the build directory will produce the executable `simple-raytracer` under the `installed/bin` directory.
 This is tunable by setting `CMAKE_INSTALL_PREFIX` during the cmake step, e.g. `cmake -DCMAKE_INSTALL_PREFIX=/usr` to install under `/usr/bin/simple-raytracer`.
+
+Other Components
+================
+
+I wrote most of the code contained within this repository; the main exception is the unit testing framework [catch][1], which I did not write.
+
+[1]: https://github.com/philsquared/Catch
