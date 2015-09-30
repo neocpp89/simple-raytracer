@@ -2,7 +2,7 @@
 #define __INTERSECT_H__
 
 #include "fnobject.h"
-#include "scene.h"
+#include "Scene.hpp"
 #include "ray.h"
 
 typedef struct intersection_s {

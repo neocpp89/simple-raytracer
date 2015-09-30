@@ -4,13 +4,13 @@
 #include <cstring>
 #include <string>
 #include <cstdio>
+#include <cmath>
+#include <cassert>
 
 #include "color.h"
 #include "Bitmap.hpp"
 #include "intersect.h"
-#include "scene.h"
-#include <cmath>
-#include <cassert>
+#include "Scene.hpp"
 
 #define MIN(x,y) (x > y)?(y):(x)
 #define MAX(x,y) (x > y)?(x):(y)

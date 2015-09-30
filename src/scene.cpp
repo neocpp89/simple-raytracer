@@ -1,4 +1,4 @@
-#include "scene.h"
+#include "Scene.hpp"
 #include <cstdlib>
 
 //<3 functions
