@@ -94,6 +94,30 @@ HSVColor RGBColor::toHSV() const
     return hsv;
 }
 
+/*
+    Adds another color (component-wise) to this one.
+*/
+RGBColor &RGBColor::additive_blend(const RGBColor &rhs)
+{
+    r_ += rhs.r();
+    g_ += rhs.g();
+    b_ += rhs.b();
+    this->clamp_values();
+    return *this;
+}
+
+/*
+    Scales the current color by a factor.
+*/
+RGBColor &RGBColor::mulitplicative_scale(const double factor)
+{
+    r_ *= factor;
+    g_ *= factor;
+    b_ *= factor;
+    this->clamp_values();
+    return *this;
+}
+
 void HSVColor::clamp_values()
 {
     while (h_ < 0) {

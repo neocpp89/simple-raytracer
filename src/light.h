@@ -9,7 +9,7 @@ typedef struct light_s {
 	double intensity; /* Value from 0.0-1.0. */
 } light_t;
 
-double lambertian_factor(vec_t *light_dir, vec_t *sn);
+const double lambertian_factor(vec_t *light_dir, vec_t *sn);
 double specular_factor(vec_t *light_dir, vec_t *sn);
 
 #endif

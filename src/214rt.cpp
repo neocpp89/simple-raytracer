@@ -17,7 +17,7 @@
 
 using namespace std;
 
-double delta = 0.00001;
+constexpr double delta = 1e-6;
 
 void rt(vec_t *color, int depth, int mdepth, scene_t *scene, ray_t *sr);
 
@@ -186,7 +186,6 @@ void rt(vec_t *color, int depth, int mdepth, scene_t *scene, ray_t *sr)
 int main(int argc, char **argv)
 {
 	SimpleRaytracer::Bitmap bmp(3200, 2400);
-	rgb_t *rgb = new rgb_t;
 	vec_t rt_color;
 	ray_t *sr;
 
@@ -204,20 +203,9 @@ int main(int argc, char **argv)
 			rt_color.x3 = 0;
 			sr = ray(scene->camera, scene->screenrays[x][y]);
 			rt(&rt_color, 0, 8, scene, sr);
-			rgb->red = (int)(rt_color.x1);
-			rgb->green = (int)(rt_color.x2);
-			rgb->blue = (int)(rt_color.x3);
-			if (rgb->red > 255) {
-				rgb->red = 255;
-			}
-			if (rgb->green > 255) {
-				rgb->green = 255;
-			}
-			if (rgb->blue > 255) {
-				rgb->blue = 255;
-			}
-			SimpleRaytracer::RGBColor clr(rgb->red, rgb->green, rgb->blue);
-			bmp.set_pixel(x, y, clr);
+            SimpleRaytracer::RGBColor rgb(rt_color.x1, rt_color.x2, rt_color.x3);
+            rgb.clamp_values();
+			bmp.set_pixel(x, y, rgb);
 			delete sr;
 		}
 		const int current_pixel = (bx*y + bx);
@@ -226,8 +214,6 @@ int main(int argc, char **argv)
     printf("\n");
 
 	bmp.write_file("output.bmp");
-
-	delete rgb;
 
 	return 0;
 }

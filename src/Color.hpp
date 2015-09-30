@@ -20,6 +20,8 @@ class RGBColor
         inline void set_g(const int g) { g_ = g; }
         inline void set_b(const int b) { b_ = b; }
         void clamp_values();
+        RGBColor &additive_blend(const RGBColor &rhs);
+        RGBColor &mulitplicative_scale(const double factor);
         HSVColor toHSV() const;
 
     private:
