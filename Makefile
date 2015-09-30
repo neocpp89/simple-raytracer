@@ -5,7 +5,7 @@ CFLAGS = -O3 -Wall -std=c++11 -march=native
 SRC = \
 	214rt.cpp \
 	Bitmap.cpp \
-	color.cpp \
+	Color.cpp \
 	intersect.cpp \
 	light.cpp \
 	numeric.cpp \

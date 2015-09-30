@@ -1,7 +1,7 @@
 SET(SOURCES
         214rt.cpp
-        bitmap.cpp
-        color.cpp
+        Bitmap.cpp
+        Color.cpp
         intersect.cpp
         light.cpp
         numeric.cpp

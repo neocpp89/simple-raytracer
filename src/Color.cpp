@@ -1,5 +1,4 @@
-#include "color.hpp"
-#include "color.h"
+#include "Color.hpp"
 
 namespace {
 
@@ -54,6 +53,13 @@ void RGBColor::clamp_values()
     return;
 }
 
+/*
+    Ugly function that converts from RGB to HSV spaces
+    RGB colors are integers in [0, 255]
+    H is in [0, 360]
+    S is in [0, 100]
+    V is in [0, 255]
+*/
 HSVColor RGBColor::toHSV() const
 {
     const int max = max_of_three(r_, g_, b_);
@@ -110,6 +116,13 @@ void HSVColor::clamp_values()
     }
 }
 
+/*
+    Ugly function that converts from HSV to RGB spaces
+    H is in [0, 360]
+    S is in [0, 100]
+    V is in [0, 255]
+    RGB colors are integers in [0, 255]
+*/
 RGBColor HSVColor::toRGB() const
 {
     int r = 0;
@@ -177,53 +190,6 @@ RGBColor HSVColor::toRGB() const
     RGBColor rgb(r, g, b);
     rgb.clamp_values();
     return rgb;
-}
-
-
-color::color()
-{   rgb = new rgb_t;
-    hsv = new hsv_t;
-    return;
-}
-
-color::~color()
-{   delete rgb;
-    delete hsv;
-    return;
-}
-
-hsv_t *color::gethsv()
-{   return hsv;
-}
-
-rgb_t *color::getrgb()
-{   return rgb;
-}
-
-void color::sethsv(int h, int s, int v)
-{
-    HSVColor chsv(h, s, v);
-    RGBColor crgb = chsv.toRGB();
-    hsv->hue = chsv.h();
-    hsv->saturation = chsv.s();
-    hsv->value = chsv.v();
-    rgb->red = crgb.r();
-    rgb->green = crgb.g();
-    rgb->blue = crgb.b();
-    return;
-}
-
-void color::setrgb(int r, int g, int b)
-{
-    RGBColor crgb(r, g, b);
-    HSVColor chsv = crgb.toHSV();
-    hsv->hue = chsv.h();
-    hsv->saturation = chsv.s();
-    hsv->value = chsv.v();
-    rgb->red = crgb.r();
-    rgb->green = crgb.g();
-    rgb->blue = crgb.b();
-    return;
 }
 
 } // namespace SimpleRaytracer

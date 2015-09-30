@@ -4,7 +4,7 @@
 #include <cstring>
 #include <cmath>
 
-#include "color.hpp"
+#include "Color.hpp"
 #include "Bitmap.hpp"
 #include "bitmap.h"
 
@@ -37,28 +37,27 @@ Bitmap::Bitmap(int width, int height) : width_(width), height_(height), data_(wi
     return;
 }
 
-void Bitmap::set_pixel(int x, int y, color *c)
+void Bitmap::set_pixel(int x, int y, const RGBColor &c)
 {
     if (x > width_ || y > height_ || x < 0 || y < 0) {
         return;
     }
-    rgb_t *r = c->getrgb();
-    data_[(bi_.height - y - 1) * bi_.width + x].red = r->red;
-    data_[(bi_.height - y - 1) * bi_.width + x].green = r->green;
-    data_[(bi_.height - y - 1) * bi_.width + x].blue = r->blue;
+    data_[(bi_.height - y - 1) * bi_.width + x].red = c.r();
+    data_[(bi_.height - y - 1) * bi_.width + x].green = c.g();
+    data_[(bi_.height - y - 1) * bi_.width + x].blue = c.b();
     return;
 }
 
-color *Bitmap::get_pixel(int x, int y) const
+RGBColor Bitmap::get_pixel(int x, int y) const
 {
-    color *r = new color;
     if (x > width_ || y > height_ || x < 0 || y < 0) {
-        return r;
+        return RGBColor(0, 0, 0);
     }
-    r->setrgb(  data_[(bi_.height - y - 1) * bi_.width + x].red,
-                data_[(bi_.height - y - 1) * bi_.width + x].green,
-                data_[(bi_.height - y - 1) * bi_.width + x].blue);
-    return r;
+    const int r = data_[(bi_.height - y - 1) * bi_.width + x].red;
+    const int g = data_[(bi_.height - y - 1) * bi_.width + x].green;
+    const int b = data_[(bi_.height - y - 1) * bi_.width + x].blue;
+    RGBColor rgb(r, g, b);
+    return rgb;
 }
 
 void Bitmap::write_file(const char *filename) const
@@ -92,14 +91,6 @@ void Bitmap::write_file(const char *filename) const
     }
     file.close();
     return;
-}
-
-const int Bitmap::get_width() const
-{   return width_;
-}
-
-const int Bitmap::get_height() const
-{   return height_;
 }
 
 } // namesapce SimpleRaytracer

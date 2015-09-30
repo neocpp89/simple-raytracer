@@ -5,6 +5,7 @@
 #include <string>
 #include <cstdio>
 
+#include "color.h"
 #include "Bitmap.hpp"
 #include "intersect.h"
 #include "scene.h"
@@ -184,15 +185,14 @@ void rt(vec_t *color, int depth, int mdepth, scene_t *scene, ray_t *sr)
 
 int main(int argc, char **argv)
 {
-	SimpleRaytracer::Bitmap *bmp = new SimpleRaytracer::Bitmap(640, 480);
-	SimpleRaytracer::color *clr = new SimpleRaytracer::color();
+	SimpleRaytracer::Bitmap bmp(3200, 2400);
 	rgb_t *rgb = new rgb_t;
 	vec_t rt_color;
 	ray_t *sr;
 
 
-	const int bx = bmp->get_width();
-	const int by = bmp->get_height();
+	const int bx = bmp.width();
+	const int by = bmp.height();
 	scene_t *scene = scene_init(bx, by, 8);
 
 	const int total_pixels = (bx*by);
@@ -216,8 +216,8 @@ int main(int argc, char **argv)
 			if (rgb->blue > 255) {
 				rgb->blue = 255;
 			}
-			clr->setrgb(rgb->red, rgb->green, rgb->blue);
-			bmp->set_pixel(x, y, clr);
+			SimpleRaytracer::RGBColor clr(rgb->red, rgb->green, rgb->blue);
+			bmp.set_pixel(x, y, clr);
 			delete sr;
 		}
 		const int current_pixel = (bx*y + bx);
@@ -225,11 +225,9 @@ int main(int argc, char **argv)
 	}
     printf("\n");
 
-	bmp->write_file("output.bmp");
+	bmp.write_file("output.bmp");
 
 	delete rgb;
-	delete clr;
-	delete bmp;
 
 	return 0;
 }

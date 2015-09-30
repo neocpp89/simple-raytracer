@@ -2,7 +2,7 @@
 #define SRT_BITMAP_HPP_
 #include <vector>
 #include "bitmap.h"
-#include "color.hpp"
+#include "Color.hpp"
 
 namespace SimpleRaytracer {
 
@@ -10,11 +10,11 @@ class Bitmap
 {	public:
 		Bitmap(int x, int y);
 
-		const int get_width() const;
-		const int get_height() const;
+		const int width() const { return width_; }
+		const int height() const { return height_; }
 
-		void set_pixel(int x, int y, color *c);
-		color *get_pixel(int x, int y) const;
+		void set_pixel(int x, int y, const RGBColor &c);
+		RGBColor get_pixel(int x, int y) const;
 
         /*
             Be careful with this, it actually will fail if we don't run this on a
@@ -28,8 +28,8 @@ class Bitmap
 		void write_file(const char *file) const;
 
 	private:
-        int width_;
-        int height_;
+        const int width_;
+        const int height_;
 
 		std::vector<b24bitpixel_t> data_;
 
