@@ -1,6 +1,8 @@
 #include "color.hpp"
 #include "color.h"
 
+namespace SimpleRaytracer {
+
 color::color()
 {	rgb = new rgb_t;
 	hsv = new hsv_t;
@@ -130,3 +132,5 @@ void color::setrgb(int r, int g, int b)
 
 	return;
 }
+
+} // namespace SimpleRaytracer

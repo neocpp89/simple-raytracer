@@ -1,7 +1,9 @@
-#ifndef __COLOR_HPP_
-#define __COLOR_HPP_
+#ifndef SRT_COLOR_HPP_ 
+#define SRT_COLOR_HPP_
 
 #include "color.h"
+
+namespace SimpleRaytracer {
 
 class color
 {	public:
@@ -18,4 +20,6 @@ class color
 		hsv_t *hsv;
 };
 
-#endif
+} // namespace SimpleRaytracer
+
+#endif //SRT_COLOR_HPP_

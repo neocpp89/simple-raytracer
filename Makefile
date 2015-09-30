@@ -4,7 +4,7 @@ BIN = simple-raytracer
 CFLAGS = -O3 -Wall -std=c++11 -march=native
 SRC = \
 	214rt.cpp \
-	bitmap.cpp \
+	Bitmap.cpp \
 	color.cpp \
 	intersect.cpp \
 	light.cpp \

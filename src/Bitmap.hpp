@@ -1,16 +1,18 @@
-#ifndef __BITMAP_HPP_
-#define __BITMAP_HPP_
-
+#ifndef SRT_BITMAP_HPP_
+#define SRT_BITMAP_HPP_
+#include <vector>
 #include "bitmap.h"
 #include "color.hpp"
 
-class bitmap
+namespace SimpleRaytracer {
+
+class Bitmap
 {	public:
-		bitmap(int x, int y);
-		~bitmap();
+		Bitmap(int x, int y);
+		~Bitmap();
 
 		void setpixel(int x, int y, color *c);
-		color *getpixel(int x, int y);
+		color *getpixel(int x, int y) const;
 		void writefile(const char *file);
 		int getwidth();
 		int getheight();
@@ -24,4 +26,6 @@ class bitmap
 		int filesize;
 };
 
-#endif
+} // namespace SimpleRaytracer
+
+#endif //SRT_BITMAP_HPP_

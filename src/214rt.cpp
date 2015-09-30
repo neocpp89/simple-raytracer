@@ -1,12 +1,11 @@
-// 214rt.cpp : Defines the entry point for the console application.
-//
+// A simple raytracer.
 
 #include <cstdlib>
 #include <cstring>
 #include <string>
 #include <cstdio>
 
-#include "bitmap.hpp"
+#include "Bitmap.hpp"
 #include "intersect.h"
 #include "scene.h"
 #include <cmath>
@@ -185,8 +184,8 @@ void rt(vec_t *color, int depth, int mdepth, scene_t *scene, ray_t *sr)
 
 int main(int argc, char **argv)
 {
-	bitmap *bmp = new bitmap(3200, 2400);
-	color *clr = new color();
+	SimpleRaytracer::Bitmap *bmp = new SimpleRaytracer::Bitmap(640, 480);
+	SimpleRaytracer::color *clr = new SimpleRaytracer::color();
 	rgb_t *rgb = new rgb_t;
 	vec_t rt_color;
 	ray_t *sr;
