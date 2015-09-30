@@ -2,6 +2,7 @@ SET(SOURCES
         214rt.cpp
         Bitmap.cpp
         Color.cpp
+        Primitives.cpp
         intersect.cpp
         light.cpp
         numeric.cpp

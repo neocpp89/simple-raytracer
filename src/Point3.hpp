@@ -68,11 +68,11 @@ class Point3
 
     None of the other operations really make sense.
 */
-inline Point3 operator+(const Point3 &lhs, const Vector3 &rhs) //copy LHS
+inline Point3 operator+(const Point3 &lhs, const Vector3 &rhs)
 {
     return Point3(lhs.x() + rhs.x(), lhs.y() + rhs.y(), lhs.z() + rhs.z());
 }
-inline Vector3 operator-(const Point3 &lhs, const Point3 &rhs) //copy LHS
+inline Vector3 operator-(const Point3 &lhs, const Point3 &rhs)
 {
     return Vector3(lhs.x() - rhs.x(), lhs.y() - rhs.y(), lhs.z() - rhs.z());
 }
