@@ -7,10 +7,8 @@ SET(LIB_SOURCES
         intersect.cpp
         light.cpp
         numeric.cpp
-        ray.cpp
         Screen.cpp
-        scene.cpp
-        vec.cpp)
+        scene.cpp)
 ADD_LIBRARY(srt ${LIB_SOURCES})
 ADD_EXECUTABLE(simple-raytracer ${DRIVER_SOURCES})
 TARGET_INCLUDE_DIRECTORIES(simple-raytracer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

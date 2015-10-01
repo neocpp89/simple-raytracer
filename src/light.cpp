@@ -1,16 +1,5 @@
 #include "light.h"
 
-double lambertian_factor(const vec_t *light_dir, const vec_t *sn)
-{
-	const double f = VDOT(light_dir, sn);
-
-	if (f < 0) {
-		return 0;
-	}
-
-	return f;
-}
-
 namespace SimpleRaytracer {
 
 double lambertian_factor(const Vector3 &light_direction, const Vector3 &surface_normal)

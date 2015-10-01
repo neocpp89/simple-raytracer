@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 
     SimpleRaytracer::Bitmap bmp(width, height);
 	SimpleRaytracer::Camera camera({0, 0, -1000});
-    SimpleRaytracer::SceneProperties scene_props({0,0,0}, 0.2);
+    SimpleRaytracer::SceneProperties scene_props({0,0,0}, 0.1);
     SimpleRaytracer::Point3 top_left({-160, 120, -200});
     SimpleRaytracer::Point3 top_right({160, 120, -200});
     SimpleRaytracer::Point3 bottom_left({-160, -120, -200});
@@ -44,10 +44,16 @@ int main(int argc, char **argv)
     SimpleRaytracer::Scene scene(camera, screen, scene_props);
 
     scene.add_object(new SimpleRaytracer::Sphere(sphere_center, sphere_radius, material_props));
-    scene.add_object(new SimpleRaytracer::Sphere({200, 0, 0}, 50, material_props));
+    scene.add_object(new SimpleRaytracer::Sphere({200, 0, 0}, 50, {{103,0,255}, 0.5, 0.5}));
+    scene.add_object(new SimpleRaytracer::Sphere({630, 213, 0}, 50, {{103,20,255}, 0.5, 0.5}));
+    scene.add_object(new SimpleRaytracer::Sphere({-420, 12, 0}, 50, {{103,60,255}, 0.5, 0.5}));
+    scene.add_object(new SimpleRaytracer::Sphere({120, 12, 0}, 50, {{103,70,255}, 0.5, 0.5}));
+    scene.add_object(new SimpleRaytracer::Sphere({-110, -12, 0}, 50, {{103,80,255}, 0.5, 0.5}));
+    scene.add_object(new SimpleRaytracer::Sphere({520, -162, 0}, 50, {{103,100,255}, 0.5, 0.5}));
 
     scene.add_light(new SimpleRaytracer::ScenePointLight({500, 500, 0}, {255, 255, 255}, 1.0));
     scene.add_light(new SimpleRaytracer::ScenePointLight({-500, 500, 0}, {255, 200, 255}, 0.5));
+    scene.add_light(new SimpleRaytracer::ScenePointLight({-300, 700, 0}, {255, 255, 255}, 1.0));
 
     const int max_bounces = 16;
     scene.render(max_bounces);

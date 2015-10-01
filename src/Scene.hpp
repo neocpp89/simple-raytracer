@@ -7,27 +7,7 @@
 #include "Primitives.hpp"
 #include "Screen.hpp"
 
-#include "fnobject.h"
 #include "light.h"
-#include "ray.h"
-
-typedef struct scene_s {
-	int nobjects;
-	int nlights;
-	fnobject_t **objects;
-	light_t **lights;
-
-	int screenx;
-	int screeny;
-	vec_t *camera;
-	vec_t *screen_origin;
-	vec_t ***screenrays;
-
-	double ambient;
-} scene_t;
-
-vec_t ***screenrays_precomp(vec_t *screen_origin, vec_t *camera_origin, int resx, int resy, double zoom);
-scene_t *scene_init(int x, int y, double zoom);
 
 namespace SimpleRaytracer {
 
@@ -56,7 +36,7 @@ class Scene
             properties_(properties) {}
 
         void render(int max_depth = 8);
-        RGBColor get_pixel(int i, int j) { return pixel_data_[indexof(i, j)]; }
+        RGBColor get_pixel(int i, int j) const { return pixel_data_[indexof(i, j)]; }
 
 
         /*
@@ -90,7 +70,6 @@ class Scene
         RGBColor render(const Ray &ray, int depth, int max_depth) const;
         Intersection find_closest_object_along_ray(const Ray &ray, size_t &index) const;
         int indexof(int i, int j) const;
-
 };
 
 } // namespace SimpleRaytracer

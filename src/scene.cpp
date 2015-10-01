@@ -1,7 +1,6 @@
 #include "Scene.hpp"
-#include <cstdlib>
-#include <cmath>
 
+#if 0
 //<3 functions
 double hfn(double x, double y, double z);
 double hgradx(double x, double y, double z);
@@ -31,32 +30,9 @@ double hgradz(double x, double y, double z)
 	double s = (x*x + y*y + 2*z*z - 1);
 	return (12*z*s*s + z*y*y*y/5);
 }
+#endif
 
-vec_t ***screenrays_precomp(vec_t *screen_origin, vec_t *camera_origin, int resx, int resy, double zoom)
-{
-	vec_t ***s;
-	int i, j;
-	double nx, ny;
-
-	s = new vec_t **[resx];
-	for (i = 0; i < resx; i++) {
-		s[i] = new vec_t *[resy];
-	}
-
-	for (i = 0 ; i < resx; i++) {
-		for (j = 0; j < resy; j++) {
-			nx = rand()/RAND_MAX;
-			ny = rand()/RAND_MAX;
-			s[i][j] = v((1.0f/zoom)*(nx + i - resx/2.0f), (1.0f/zoom)*(ny - j + resy/2.0f), 0);
-			VADD(s[i][j], s[i][j], screen_origin);
-			VSUB(s[i][j], s[i][j], camera_origin);
-			vnormalize(s[i][j]);
-		}
-	}
-
-	return s;
-}
-
+#if 0
 /*
 	Not a generic function, setup specifically for a scene we want to render.
 */
@@ -243,10 +219,11 @@ scene_t *scene_init(int x, int y, double zoom)
 
 	return s;
 }
+#endif
 
 namespace {
 
-// reflect a vector across a place defined by a surface normal.
+// reflect a vector across a plane defined by a surface normal.
 SimpleRaytracer::Vector3 reflection(
     const SimpleRaytracer::Vector3 &direction,
     const SimpleRaytracer::Vector3 &surface_normal);

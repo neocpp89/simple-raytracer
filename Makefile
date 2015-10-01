@@ -11,10 +11,8 @@ SRC = \
 	intersect.cpp \
 	light.cpp \
 	numeric.cpp \
-	ray.cpp \
     Screen.cpp \
-	scene.cpp \
-	vec.cpp
+	scene.cpp
 
 SRCDIR = src/
 
