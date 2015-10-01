@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Primitives.hpp"
 
 namespace simple_raytracer {

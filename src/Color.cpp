@@ -184,34 +184,34 @@ RGBColor HSVColor::ToRGB() const
         */
         switch (i) {
             case 0: {
-                r = (int)nv;
-                g = (int)t;
-                b = (int)p;
+                r = static_cast<int>(nv);
+                g = static_cast<int>(t);
+                b = static_cast<int>(p);
             } break;
             case 1: {
-                r = (int)q;
-                g = (int)nv;
-                b = (int)p;
+                r = static_cast<int>(q);
+                g = static_cast<int>(nv);
+                b = static_cast<int>(p);
             } break;
             case 2: {
-                r = (int)p;
-                g = (int)nv;
-                b = (int)t;
+                r = static_cast<int>(p);
+                g = static_cast<int>(nv);
+                b = static_cast<int>(t);
             } break;
             case 3: {
-                r = (int)p;
-                g = (int)q;
-                b = (int)nv;
+                r = static_cast<int>(p);
+                g = static_cast<int>(q);
+                b = static_cast<int>(nv);
             } break;
             case 4: {
-                r = (int)t;
-                g = (int)p;
-                b = (int)nv;
+                r = static_cast<int>(t);
+                g = static_cast<int>(p);
+                b = static_cast<int>(nv);
             } break;
             case 5: {
-                r = (int)nv;
-                g = (int)p;
-                b = (int)q;
+                r = static_cast<int>(nv);
+                g = static_cast<int>(p);
+                b = static_cast<int>(q);
             } break;
         }
     }

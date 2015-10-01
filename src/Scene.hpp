@@ -4,9 +4,9 @@
 #include <memory>
 
 #include "Camera.hpp"
+#include "Color.hpp"
 #include "Primitives.hpp"
 #include "Screen.hpp"
-
 #include "Light.hpp"
 
 namespace simple_raytracer {

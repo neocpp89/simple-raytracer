@@ -4,6 +4,7 @@
 
 #include "Bitmap.hpp"
 #include "Camera.hpp"
+#include "Color.hpp"
 #include "Point3.hpp"
 #include "Primitives.hpp"
 #include "Scene.hpp"
@@ -22,26 +23,20 @@ simple_raytracer::Scene DemoScene(int width, int height)
     simple_raytracer::Point3 bottom_left({-160, -120, -200});
     simple_raytracer::Screen screen(top_left, top_right, bottom_left, height, width);
 
-    simple_raytracer::RGBColor material_rgb(255, 0, 0);
-    const double material_lambertian = 0.3;
-    const double material_reflectivity = 0.7;
-    simple_raytracer::MaterialProperties material_props(material_rgb, material_lambertian, material_reflectivity);
-    simple_raytracer::Point3 sphere_center(0, 0, 0);
-    const double sphere_radius = 100;
     simple_raytracer::Scene scene(camera, screen, scene_props);
 
-    scene.AddObject(new simple_raytracer::Sphere(sphere_center, sphere_radius, material_props));
-    scene.AddObject(new simple_raytracer::Sphere({200, 0, 0}, 50, {{103,0,255}, 0.5, 0.5}));
-    scene.AddObject(new simple_raytracer::Sphere({630, 213, 0}, 50, {{103,20,255}, 0.5, 0.5}));
-    scene.AddObject(new simple_raytracer::Sphere({-420, 12, 0}, 50, {{103,60,255}, 0.5, 0.5}));
-    scene.AddObject(new simple_raytracer::Sphere({120, 12, 0}, 50, {{103,70,255}, 0.5, 0.5}));
-    scene.AddObject(new simple_raytracer::Sphere({-110, -12, 0}, 50, {{103,80,255}, 0.5, 0.5}));
-    scene.AddObject(new simple_raytracer::Sphere({520, -162, 0}, 50, {{103,100,255}, 0.5, 0.5}));
-    scene.AddObject(new simple_raytracer::Plane({0, 1, 0}, 125, {{180,120,255}, 0.2, 0.8}));
+    scene.AddObject(new simple_raytracer::Sphere({-160, 120, 5}, 100, {{32,120,32}, 0.5, 0.5}));
+    scene.AddObject(new simple_raytracer::Sphere({200, 0, 3}, 77, {{103,0,255}, 0.5, 0.5}));
+    scene.AddObject(new simple_raytracer::Sphere({30, 143, 61}, 50, {{32,32,255}, 0.3, 0.7}));
+    scene.AddObject(new simple_raytracer::Sphere({-20, -70, -12}, 55, {{255,32,32}, 0.7, 0.3}));
+    scene.AddObject(new simple_raytracer::Sphere({100, 52, 5}, 23, {{103,70,255}, 0.5, 0.5}));
+    scene.AddObject(new simple_raytracer::Sphere({-110, -12, 12}, 40, {{240,240,32}, 0.1, 0.9}));
+    scene.AddObject(new simple_raytracer::Sphere({80, -105, 63}, 12, {{32,240,32}, 0.8, 0.2}));
+    scene.AddObject(new simple_raytracer::Plane({0, 1, 0}, 125, {{128,77,180}, 0.4, 0.6}));
 
-    scene.AddLight(new simple_raytracer::ScenePointLight({500, 500, 0}, {255, 255, 255}, 1.0));
-    scene.AddLight(new simple_raytracer::ScenePointLight({-500, 500, 0}, {255, 200, 255}, 0.5));
-    scene.AddLight(new simple_raytracer::ScenePointLight({-300, 700, 0}, {255, 255, 255}, 1.0));
+    scene.AddLight(new simple_raytracer::ScenePointLight({1000, 1000, -400}, {255, 255, 255}, 1.0));
+    scene.AddLight(new simple_raytracer::ScenePointLight({-500, 500, 0}, {255, 255, 255}, 1.0));
+    scene.AddLight(new simple_raytracer::ScenePointLight({-700, 700, 400}, {255, 255, 255}, 1.0));
     return scene;
 }
 
@@ -63,7 +58,7 @@ int main(int argc, char **argv)
     simple_raytracer::Bitmap bmp(width, height);
     simple_raytracer::Scene scene = DemoScene(width, height);
 
-    const int max_bounces = 16;
+    const int max_bounces = 32;
     scene.Render(max_bounces);
     for (int i = 0; i < bmp.height(); i++) {
         for (int j = 0; j < bmp.width(); j++) {
