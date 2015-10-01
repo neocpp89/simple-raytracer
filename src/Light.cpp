@@ -1,4 +1,6 @@
 #include "Light.hpp"
+#include "Point3.hpp"
+#include "Vector3.hpp"
 
 namespace simple_raytracer {
 

@@ -291,6 +291,11 @@ void Scene::Render(int max_depth)
     return;
 }
 
+/*
+    This is the actual recursive raytracing function.
+
+    It's a big one!
+*/
 RGBColor Scene::Render(const Ray &ray, int depth, int max_depth) const
 {
     /*
@@ -326,9 +331,21 @@ RGBColor Scene::Render(const Ray &ray, int depth, int max_depth) const
     Point3 perturbed_point = closest.point() + DELTA * closest.surface_normal();
 
     RGBColor color_diff = object_color;
-    color_diff.mulitplicative_scale(properties_.ambient_lighting());
-    rgb.additive_blend(color_diff);
+    color_diff.MultiplicativeScale(properties_.ambient_lighting());
+    rgb.AdditiveBlend(color_diff);
 
+    /*
+        This code is somewhat large and ugly. Refactor into a function soon.
+
+        The lambertian lighting depends on the cosine of the angle to light
+        sources. So we simply iterate through the light and compute these
+        dot products. There is also specular lighting, which depends on this
+        dot product to a power.
+
+        The only other condition we have to worry about is if an object is
+        blocking the path to the light, so we need to run another intersection
+        test.
+    */
     if (lambertian > 0) {
         double total_lambertian_factor = 0;
         
@@ -355,9 +372,8 @@ RGBColor Scene::Render(const Ray &ray, int depth, int max_depth) const
                             specularity = std::pow(specularity, 100*reflectivity);
                             specularity *= reflectivity * light->intensity();
                             RGBColor composite_light_color = light->color();
-                            composite_light_color.mulitplicative_scale(specularity);
-                            composite_light_color.clamp_values();
-                            rgb.additive_blend(composite_light_color);
+                            composite_light_color.MultiplicativeScale(specularity);
+                            rgb.AdditiveBlend(composite_light_color);
                         }
                     }
                 }
@@ -367,18 +383,20 @@ RGBColor Scene::Render(const Ray &ray, int depth, int max_depth) const
         if (total_lambertian_factor > 0) {
             total_lambertian_factor *= lambertian;
             RGBColor composite_color = object_color;
-            composite_color.mulitplicative_scale(total_lambertian_factor);
-            composite_color.clamp_values();
-            rgb.additive_blend(composite_color);
+            composite_color.MultiplicativeScale(total_lambertian_factor);
+            rgb.AdditiveBlend(composite_color);
         }
     }
 
+    /*
+        Reflect the ray off the surface, absorbing some of the color properties.
+    */
     if (reflectivity > 0) {
         const Vector3 reflected_direction = reflection(ray.direction(), closest.surface_normal());
         const Ray reflect(perturbed_point, reflected_direction);
         RGBColor reflection_rgb = Render(reflect, depth+1, max_depth);
-        reflection_rgb.mulitplicative_scale(reflectivity);
-        rgb.additive_blend(reflection_rgb);
+        reflection_rgb.MultiplicativeScale(reflectivity);
+        rgb.AdditiveBlend(reflection_rgb);
     }
     return rgb;
 }

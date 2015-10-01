@@ -20,11 +20,11 @@ class SceneLight
             origin_(origin), color_(color), intensity_(intensity) {}
         virtual ~SceneLight() {}
 
-        virtual Vector3 DirectionToLight(const Point3 &from) const = 0;
-
         Point3 origin() const { return origin_; }
         RGBColor color() const { return color_; }
         double intensity() const { return intensity_; }
+
+        virtual Vector3 DirectionToLight(const Point3 &from) const = 0;
 
     private:
         Point3 origin_;

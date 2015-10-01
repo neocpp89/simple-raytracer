@@ -30,7 +30,12 @@ T min_of_three(T a, T b, T c)
 
 namespace simple_raytracer {
 
-void RGBColor::clamp_values()
+/*
+    We don't enfore that the RGB color always is an actual 24-bit triplet, but
+    this function will clamp the values to the valid range [0-255] for all
+    components.
+*/
+void RGBColor::ClampValues()
 {
     if (r_ < 0) {
         r_ = 0;
@@ -60,7 +65,7 @@ void RGBColor::clamp_values()
     S is in [0, 100]
     V is in [0, 255]
 */
-HSVColor RGBColor::toHSV() const
+HSVColor RGBColor::ToHSV() const
 {
     const int max = max_of_three(r_, g_, b_);
     const int min = min_of_three(r_, g_, b_);
@@ -90,35 +95,35 @@ HSVColor RGBColor::toHSV() const
     int v = max;
 
     HSVColor hsv(h, s, v);
-    hsv.clamp_values();
+    hsv.ClampValues();
     return hsv;
 }
 
 /*
     Adds another color (component-wise) to this one.
 */
-RGBColor &RGBColor::additive_blend(const RGBColor &rhs)
+RGBColor &RGBColor::AdditiveBlend(const RGBColor &rhs)
 {
     r_ += rhs.r();
     g_ += rhs.g();
     b_ += rhs.b();
-    this->clamp_values();
+    this->ClampValues();
     return *this;
 }
 
 /*
     Scales the current color by a factor.
 */
-RGBColor &RGBColor::mulitplicative_scale(const double factor)
+RGBColor &RGBColor::MultiplicativeScale(const double factor)
 {
     r_ *= factor;
     g_ *= factor;
     b_ *= factor;
-    this->clamp_values();
+    this->ClampValues();
     return *this;
 }
 
-void HSVColor::clamp_values()
+void HSVColor::ClampValues()
 {
     while (h_ < 0) {
         h_ += 360;
@@ -147,7 +152,7 @@ void HSVColor::clamp_values()
     V is in [0, 255]
     RGB colors are integers in [0, 255]
 */
-RGBColor HSVColor::toRGB() const
+RGBColor HSVColor::ToRGB() const
 {
     int r = 0;
     int g = 0;
@@ -212,7 +217,7 @@ RGBColor HSVColor::toRGB() const
     }
 
     RGBColor rgb(r, g, b);
-    rgb.clamp_values();
+    rgb.ClampValues();
     return rgb;
 }
 

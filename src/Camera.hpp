@@ -6,6 +6,10 @@
 
 namespace simple_raytracer {
 
+/*
+    The camera class doesn't do very much right now, it's basically just
+    another point. I have plans to expand this later though.
+*/
 class Camera
 {
     public:

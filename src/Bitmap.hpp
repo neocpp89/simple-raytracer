@@ -7,6 +7,11 @@
 
 namespace simple_raytracer {
 
+/*
+    Class for managing simple 24-bit bitmaps.
+
+    Allows you to set pixel data as well as write it to a file.
+*/
 class Bitmap
 {
     public:

@@ -7,6 +7,11 @@
 
 namespace simple_raytracer {
 
+/*
+    Contains the necessary information regarding an intersection, such as if
+    a hit even occured in the first place, the time (scaling of a unit
+    direction vector), point of intersection, and surface normal at that point.
+*/
 class Intersection
 {
     public:
@@ -26,6 +31,10 @@ class Intersection
         Vector3 surface_normal_;
 };
 
+/*
+    Contains any interesting properties scene objects should have, such as
+    color, reflectivity, and lambertian lighting factor.
+*/
 class MaterialProperties
 {
     public:
@@ -63,6 +72,9 @@ class SceneObject
 
 /*
     The classic, and very simple to calculate.
+
+    An idea for more complex shapes, inherit from the Sphere and compute a
+    bounding sphere for a cheaper intersection test.
 */
 class Sphere : public SceneObject
 {

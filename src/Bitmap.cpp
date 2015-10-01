@@ -14,8 +14,8 @@ namespace simple_raytracer {
 
 Bitmap::Bitmap(int width, int height) : width_(width), height_(height), data_(width * height)
 {
-    bf_.type = 19778;
-    bf_.size = 3 * width * height + sizeof(bfheader_t) + sizeof(biheader_t); //assume 24bpp
+    bf_.type = 19778;   // magic header
+    bf_.size = 3 * width * height + sizeof(bfheader_t) + sizeof(biheader_t); // 24bpp
     bf_.reserved1 = 0;
     bf_.reserved2 = 0;
     bf_.offset = sizeof(bfheader_t) + sizeof(biheader_t);
@@ -33,7 +33,7 @@ Bitmap::Bitmap(int width, int height) : width_(width), height_(height), data_(wi
     bi_.clrimportant = 0;
 
     datasize_ = bi_.width * bi_.height * sizeof(b24bitpixel_t);
-    filesize_ = 4 * (int)(ceil((24 * width) / 32.0)) * height + bf_.offset;  //24bpp
+    filesize_ = 4 * static_cast<int>(ceil((24 * width) / 32.0)) * height + bf_.offset;  // 24bpp
 
     return;
 }
@@ -69,6 +69,9 @@ RGBColor Bitmap::GetPixelImageCoordinates(int i, int j) const
     /*
         Bitmaps are actually weird and store image data
         in regular cartesian coordinates...
+
+        Apparently this can be changed by setting the height
+        to be negative, but this is easier for me.
     */
     const int image_coordinates_i = height_ - i - 1;
     const int r = data_[image_coordinates_i * width_ + j].red;
@@ -90,6 +93,11 @@ RGBColor Bitmap::GetPixel(int x, int y) const
     return rgb;
 }
 
+/*
+    This function is actually somewhat wasteful since it
+    allocates a large buffer for the bitmap and then writes that
+    out a byte at a time. This can definintely be done better.
+*/
 void Bitmap::WriteFile(const std::string &filename) const
 {
     std::vector<uint8_t> rawdata(filesize_);

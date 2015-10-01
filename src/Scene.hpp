@@ -11,6 +11,11 @@
 
 namespace simple_raytracer {
 
+/*
+    Manager class for overall properties of the scene, such as
+    ambient lighting level (double from 0.0 to 1.0) and background color
+    (specified as an RGBColor).
+*/
 class SceneProperties
 {
     public:
@@ -27,6 +32,19 @@ class SceneProperties
         double ambient_lighting_;
 };
 
+/*
+    The main scene class.
+
+    After setting up a Camera and Screen (and SceneProperties), you can create
+    one of these objects.
+
+    Call AddObject(new DerivedFromSceneObject(...)) and
+    AddLight(new DerivedFromSceneLight(...)) to actually populate the scene.
+
+    After this is done, call Render() to compute the image pixel data.
+
+    This contains the main recursive raytracing function.
+*/
 class Scene
 {
     public:

@@ -5,6 +5,9 @@ namespace simple_raytracer {
 
 /*
     Forward declare these since they return each other as objects in conversion.
+
+    Sometimes the different spaces are useful for certain oprations. However for
+    the most part I will just use the RGBColor.
 */
 class RGBColor;
 class HSVColor;
@@ -19,10 +22,10 @@ class RGBColor
         inline void set_r(const int r) { r_ = r; }
         inline void set_g(const int g) { g_ = g; }
         inline void set_b(const int b) { b_ = b; }
-        void clamp_values();
-        RGBColor &additive_blend(const RGBColor &rhs);
-        RGBColor &mulitplicative_scale(const double factor);
-        HSVColor toHSV() const;
+        void ClampValues();
+        RGBColor &AdditiveBlend(const RGBColor &rhs);
+        RGBColor &MultiplicativeScale(const double factor);
+        HSVColor ToHSV() const;
 
     private:
         int r_;
@@ -40,8 +43,8 @@ class HSVColor
         inline void set_h(const int h) { h_ = h; }
         inline void set_s(const int s) { s_ = s; }
         inline void set_v(const int v) { v_ = v; }
-        void clamp_values();
-        RGBColor toRGB() const;
+        void ClampValues();
+        RGBColor ToRGB() const;
 
     private:
         int h_;

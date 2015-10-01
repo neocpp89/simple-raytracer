@@ -5,6 +5,15 @@
 
 namespace simple_raytracer {
 
+/*
+    This class contains the locations of points that we call the screen.
+
+    It does not actually store any pixel data, nor does it specify where the
+    camera is. Typically, you would use the camera origin and draw rays to
+    each of the screen points, and these would be used as the initial rays.
+    The return value of those rays would then be the color of a pixel in the
+    resulting image.
+*/
 class Screen
 {
     public:
@@ -19,6 +28,11 @@ class Screen
         int rows() const { return rows_; }
         int columns() const { return columns_; }
 
+        /*
+            SetPoint and GetPoint check their arguments for
+            validity. SetPoint doesn't do anything if out of range,
+            while GetPoint returns a {0, 0, 0} point.
+        */
         void SetPoint(int i, int j, const Point3 &point);
         Point3 GetPoint(int i, int j) const;
 
