@@ -75,8 +75,8 @@ class Scene
         void AddLight(SceneLight *light) { lights_.emplace_back(light); }
 
     private:
-        const Camera camera_;
-        const Screen screen_;
+        Camera camera_;
+        Screen screen_;
         std::vector<std::unique_ptr<SceneObject>> objects_;
         std::vector<std::unique_ptr<SceneLight>> lights_;
         std::vector<RGBColor> pixel_data_;

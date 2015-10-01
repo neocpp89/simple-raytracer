@@ -1,7 +1,7 @@
 simple-raytracer
 ================
 
-`simple-raytracer` is a small raytracing program that I worked on during 2009/2010 while at Caltech.
+`simple-raytracer` is a small raytracing program that I wrote around 2009/2010 while at Caltech.
 It's your traditional sphere-and-plane rendering program.
 
 I am currently (Sep 2015) updating the program to use more modern C++, and have also moved it to the [CMake][0] build system.
@@ -39,5 +39,5 @@ Calling the program as
     simple-raytracer demo.bmp 3200 2400
 
 will create a 3200x2400 pixel file called `demo.bmp`.
-You can change the filename, and the vertical and horizontal widths.
-The aspect ratio of the demo screen is 4:3, so picking other aspect ratios will cause the scene to look skewed when viewing the bitmap.
+You can change the filename, and the vertical and horizontal dimensions.
+The aspect ratio of the demo screen is 4:3, so picking other aspect ratios will cause the scene to look skewed when viewing the bitmap unless the pixels are not square.
