@@ -6,7 +6,7 @@
 #include "Vector3.hpp"
 #include "Ray.hpp"
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 class Intersection
 {
@@ -76,6 +76,6 @@ class Sphere : public SceneObject
         const double radius_;
 };
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer
 
 #endif //SRT_PRIMITIVES_HPP_

@@ -10,7 +10,7 @@
 #include "bitmap.h"
 
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 Bitmap::Bitmap(int width, int height) : width_(width), height_(height), data_(width * height)
 {
@@ -38,7 +38,7 @@ Bitmap::Bitmap(int width, int height) : width_(width), height_(height), data_(wi
     return;
 }
 
-void Bitmap::set_pixel_ij(int i, int j, const RGBColor &c)
+void Bitmap::SetPixelImageCoordinates(int i, int j, const RGBColor &c)
 {
     if (j >= width_ || i >= height_ || i < 0 || j < 0) {
         return;
@@ -50,7 +50,7 @@ void Bitmap::set_pixel_ij(int i, int j, const RGBColor &c)
     return;
 }
 
-void Bitmap::set_pixel(int x, int y, const RGBColor &c)
+void Bitmap::SetPixel(int x, int y, const RGBColor &c)
 {
     if (x >= width_ || y >= height_ || x < 0 || y < 0) {
         return;
@@ -61,7 +61,7 @@ void Bitmap::set_pixel(int x, int y, const RGBColor &c)
     return;
 }
 
-RGBColor Bitmap::get_pixel_ij(int i, int j) const
+RGBColor Bitmap::GetPixelImageCoordinates(int i, int j) const
 {
     if (j >= width_ || i >= height_ || i < 0 || j < 0) {
         return RGBColor(0, 0, 0);
@@ -78,7 +78,7 @@ RGBColor Bitmap::get_pixel_ij(int i, int j) const
     return rgb;
 }
 
-RGBColor Bitmap::get_pixel(int x, int y) const
+RGBColor Bitmap::GetPixel(int x, int y) const
 {
     if (x >= width_ || y >= height_ || x < 0 || y < 0) {
         return RGBColor(0, 0, 0);
@@ -90,7 +90,7 @@ RGBColor Bitmap::get_pixel(int x, int y) const
     return rgb;
 }
 
-void Bitmap::write_file(const std::string &filename) const
+void Bitmap::WriteFile(const std::string &filename) const
 {
     std::vector<uint8_t> rawdata(filesize_);
     uint8_t *raw = &rawdata[0];
@@ -123,4 +123,4 @@ void Bitmap::write_file(const std::string &filename) const
     return;
 }
 
-} // namesapce SimpleRaytracer
+} // namesapce simple_raytracer

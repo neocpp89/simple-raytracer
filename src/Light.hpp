@@ -4,9 +4,9 @@
 #include "Point3.hpp"
 #include "Vector3.hpp"
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
-double lambertian_factor(const Vector3 &light_direction, const Vector3 &surface_normal);
+double LambertianFactor(const Vector3 &light_direction, const Vector3 &surface_normal);
 
 /*
     The generic class for a light in the scene.
@@ -20,7 +20,7 @@ class SceneLight
             origin_(origin), color_(color), intensity_(intensity) {}
         virtual ~SceneLight() {}
 
-        virtual Vector3 direction_to_light(const Point3 &from) const = 0;
+        virtual Vector3 DirectionToLight(const Point3 &from) const = 0;
 
         Point3 origin() const { return origin_; }
         RGBColor color() const { return color_; }
@@ -42,12 +42,12 @@ class ScenePointLight : public SceneLight
         ScenePointLight(const SceneLight &sl) : SceneLight(sl) {}
         ScenePointLight(const Point3 &origin, const RGBColor &color, const double intensity) :
             SceneLight(origin, color, intensity) {}
-        Vector3 direction_to_light(const Point3 &from) const;
+        Vector3 DirectionToLight(const Point3 &from) const;
 
     private:
 
 };
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer
 
 #endif // SRT_LIGHT_HPP_

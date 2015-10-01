@@ -224,20 +224,20 @@ scene_t *scene_init(int x, int y, double zoom)
 namespace {
 
 // reflect a vector across a plane defined by a surface normal.
-SimpleRaytracer::Vector3 reflection(
-    const SimpleRaytracer::Vector3 &direction,
-    const SimpleRaytracer::Vector3 &surface_normal);
-SimpleRaytracer::Vector3 reflection(
-    const SimpleRaytracer::Vector3 &direction,
-    const SimpleRaytracer::Vector3 &surface_normal)
+simple_raytracer::Vector3 reflection(
+    const simple_raytracer::Vector3 &direction,
+    const simple_raytracer::Vector3 &surface_normal);
+simple_raytracer::Vector3 reflection(
+    const simple_raytracer::Vector3 &direction,
+    const simple_raytracer::Vector3 &surface_normal)
 {
-    const double f = 2 * direction.dot(surface_normal);
+    const double f = 2 * direction.Dot(surface_normal);
     return (direction - f * surface_normal);
 }
 
 } // anonymous namespace
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 constexpr double DELTA = 1e-6;
 
@@ -282,7 +282,7 @@ void Scene::render(int max_depth)
     for (int i = 0; i < screen_.rows(); i++) {
         for (int j = 0; j < screen_.columns(); j++) {
             Vector3 direction = screen_.get_point(i, j) - camera_.origin();
-            direction.normalize();
+            direction.Normalize();
             Ray ray(screen_.get_point(i, j), direction);
             pixel_data_[indexof(i, j)] = render(ray, 0, max_depth);
             // std::cout << "("<< i << ", "  << j << "): " << screen_.get_point(i, j) << '\n';
@@ -334,13 +334,13 @@ RGBColor Scene::render(const Ray &ray, int depth, int max_depth) const
         
         for (auto const &light : lights_) {
             const Vector3 light_vector = light->origin() - perturbed_point;
-            const double light_distance_squared = light_vector.dot(light_vector);
+            const double light_distance_squared = light_vector.Dot(light_vector);
             Vector3 light_direction = light_vector;
-            light_direction.normalize();
+            light_direction.Normalize();
 
             Ray shadow(perturbed_point, light_direction);
 
-            double current_lambertian_factor = lambertian_factor(light_direction, closest.surface_normal());
+            double current_lambertian_factor = LambertianFactor(light_direction, closest.surface_normal());
             if (current_lambertian_factor > 0) {
                 size_t shadow_min_idx = 0;
                 Intersection shadow_closest = find_closest_object_along_ray(shadow, shadow_min_idx);
@@ -350,7 +350,7 @@ RGBColor Scene::render(const Ray &ray, int depth, int max_depth) const
                     if (reflectivity > 0) {
                         const Vector3 reflected_light_direction = reflection(light_direction, closest.surface_normal());
 
-                        double specularity = reflected_light_direction.dot(ray.direction());
+                        double specularity = reflected_light_direction.Dot(ray.direction());
                         if (specularity > 0) {
                             specularity = std::pow(specularity, 100*reflectivity);
                             specularity *= reflectivity * light->intensity();
@@ -383,4 +383,4 @@ RGBColor Scene::render(const Ray &ray, int depth, int max_depth) const
 	return rgb;
 }
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer

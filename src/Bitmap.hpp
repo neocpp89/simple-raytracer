@@ -5,7 +5,7 @@
 #include "bitmap.h"
 #include "Color.hpp"
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 class Bitmap
 {
@@ -18,15 +18,15 @@ class Bitmap
         /*
             Access bitmap data in cartesian coordinates x, y.
         */
-        void set_pixel(int x, int y, const RGBColor &c);
-        RGBColor get_pixel(int x, int y) const;
+        void SetPixel(int x, int y, const RGBColor &c);
+        RGBColor GetPixel(int x, int y) const;
 
         /*
             Access bitmap data in image coordinates i,j
             increasing to the right and down from the top-left corner.
         */
-        void set_pixel_ij(int i, int j, const RGBColor &c);
-        RGBColor get_pixel_ij(int i, int j) const;
+        void SetPixelImageCoordinates(int i, int j, const RGBColor &c);
+        RGBColor GetPixelImageCoordinates(int i, int j) const;
 
         /*
            Be careful with this, it actually will fail if we don't run this on a
@@ -37,7 +37,7 @@ class Bitmap
 
            I haven't thought of a good way to fix this yet.
          */
-        void write_file(const std::string &file) const;
+        void WriteFile(const std::string &file) const;
 
     private:
         const int width_;
@@ -51,6 +51,6 @@ class Bitmap
         int filesize_;
 };
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer
 
 #endif //SRT_BITMAP_HPP_

@@ -2,7 +2,7 @@
 #define SRT_BITMAP_H_
 #include <stdint.h>
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 /*
     Bitmap header information and structure defintion.
@@ -46,7 +46,7 @@ typedef struct b24bitpixel_s {
 } b24bitpixel_t;
 #pragma pack(pop)
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer
 
 #endif //SRT_BITMAP_H_
 

@@ -28,7 +28,7 @@ T min_of_three(T a, T b, T c)
 
 } // anonymous namespace
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 void RGBColor::clamp_values()
 {
@@ -216,4 +216,4 @@ RGBColor HSVColor::toRGB() const
     return rgb;
 }
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer

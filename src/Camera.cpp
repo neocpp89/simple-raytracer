@@ -1,5 +1,5 @@
 #include "Camera.hpp"
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer

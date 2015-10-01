@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Primitives.hpp"
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 /*
     Simple collision detection of a ray and a sphere.
@@ -21,9 +21,9 @@ Intersection Sphere::intersect(const Ray &ray) const
     const Vector3 direction = ray.direction();
 
 	const Vector3 vp = origin - center_;
-	const double a = direction.dot(direction);
-	const double b = 2*direction.dot(vp);
-	const double c = vp.dot(vp) - radius_*radius_;
+	const double a = direction.Dot(direction);
+	const double b = 2*direction.Dot(vp);
+	const double c = vp.Dot(vp) - radius_*radius_;
 
 	const double discriminant = b*b - 4*a*c;
     bool hit = true;
@@ -61,4 +61,4 @@ Intersection Sphere::intersect(const Ray &ray) const
 	return Intersection(hit, t, point, surface_normal);
 }
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer

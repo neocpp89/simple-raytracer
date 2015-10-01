@@ -6,7 +6,7 @@
 
 #include "Vector3.hpp"
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 /*
     3D Point class.
@@ -85,6 +85,6 @@ inline std::ostream &operator<<(std::ostream &os, const Point3 &point)
     return os;
 }
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer
 
 #endif // SRT_POINT3_HPP_

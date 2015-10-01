@@ -4,7 +4,7 @@
 #include <string>
 #include <cmath>
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 /*
     3D Vector class.
@@ -30,13 +30,13 @@ class Vector3
         /*
             Functions.
         */
-        double magnitude() const
+        double Magnitude() const
         {
-            return std::sqrt(this->dot(*this));
+            return std::sqrt(this->Dot(*this));
         }
-        void normalize()
+        void Normalize()
         {
-            const double m = magnitude();
+            const double m = Magnitude();
             // Zero vector will NOT be normalized.
             if (m != 0) {
                 (*this) /= m;
@@ -100,13 +100,13 @@ class Vector3
         }
 
         // inner product of two vectors
-        inline double dot(const Vector3 &rhs) const
+        inline double Dot(const Vector3 &rhs) const
         {
             return (x_*rhs.x() + y_*rhs.y() + z_*rhs.z());
         }
 
         // cross product of two vectors
-        inline Vector3 cross(const Vector3 &rhs) const
+        inline Vector3 Cross(const Vector3 &rhs) const
         {
             const Vector3 &lhs = *this;
             const double x = (lhs.y_ * rhs.z_) - (lhs.z_ * rhs.y_);
@@ -161,6 +161,6 @@ inline std::ostream &operator<<(std::ostream &os, const Vector3 &vector)
     return os;
 }
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer
 
 #endif // SRT_VECTOR3_HPP_

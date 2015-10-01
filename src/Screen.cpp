@@ -1,7 +1,7 @@
 #include "Screen.hpp"
 #include "Vector3.hpp"
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 void Screen::set_point(int i, int j, const Point3 &point)
 {
@@ -36,4 +36,4 @@ void Screen::generate_points_()
     return;
 }
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer

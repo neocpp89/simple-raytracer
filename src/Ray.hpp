@@ -3,7 +3,7 @@
 #include "Point3.hpp"
 #include "Vector3.hpp"
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 class Ray
 {
@@ -17,6 +17,6 @@ class Ray
         const Vector3 direction_;
 };
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer
 
 #endif //SRT_RAY_HPP_

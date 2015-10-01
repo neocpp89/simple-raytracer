@@ -7,9 +7,9 @@
 #include "Primitives.hpp"
 #include "Screen.hpp"
 
-#include "light.h"
+#include "Light.hpp"
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 class SceneProperties
 {
@@ -72,6 +72,6 @@ class Scene
         int indexof(int i, int j) const;
 };
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer
 
 #endif // SRT_SCENE_HPP_

@@ -1,7 +1,7 @@
 #ifndef SRT_COLOR_HPP_ 
 #define SRT_COLOR_HPP_
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 /*
     Forward declare these since they return each other as objects in conversion.
@@ -49,6 +49,6 @@ class HSVColor
         int v_;
 };
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer
 
 #endif //SRT_COLOR_HPP_

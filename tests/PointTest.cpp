@@ -1,6 +1,6 @@
 #include "Point3.hpp"
-using Point3 = SimpleRaytracer::Point3;
-using Vector3 = SimpleRaytracer::Vector3;
+using Point3 = simple_raytracer::Point3;
+using Vector3 = simple_raytracer::Vector3;
 
 #include "catch.hpp"
 

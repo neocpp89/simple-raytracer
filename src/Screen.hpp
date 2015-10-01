@@ -3,7 +3,7 @@
 #include <vector>
 #include "Point3.hpp"
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 class Screen
 {
@@ -33,6 +33,6 @@ class Screen
         void generate_points_();
 };
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer
 
 #endif //SRT_SCREEN_HPP_

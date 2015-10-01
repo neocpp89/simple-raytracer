@@ -1,5 +1,5 @@
 #include "Vector3.hpp"
-using Vector3 = SimpleRaytracer::Vector3;
+using Vector3 = simple_raytracer::Vector3;
 
 #include "catch.hpp"
 
@@ -58,24 +58,24 @@ TEST_CASE("Vector3 Normalization", "[operators]") {
     Vector3 E = {0, 0, 0};
 
     SECTION("Magnitude") {
-        REQUIRE(A.magnitude() == 5);
-        REQUIRE(B.magnitude() == 13);
-        REQUIRE(C.magnitude() == 0.5);
-        REQUIRE(D.magnitude() == 26);
-        REQUIRE(E.magnitude() == 0);
+        REQUIRE(A.Magnitude() == 5);
+        REQUIRE(B.Magnitude() == 13);
+        REQUIRE(C.Magnitude() == 0.5);
+        REQUIRE(D.Magnitude() == 26);
+        REQUIRE(E.Magnitude() == 0);
     }
 
     SECTION("Normalization") {
-        A.normalize();
-        B.normalize();
-        C.normalize();
-        D.normalize();
-        E.normalize();
-        REQUIRE(A.magnitude() == Approx(1));
-        REQUIRE(B.magnitude() == Approx(1));
-        REQUIRE(C.magnitude() == Approx(1));
-        REQUIRE(D.magnitude() == Approx(1));
-        REQUIRE(E.magnitude() == 0);
+        A.Normalize();
+        B.Normalize();
+        C.Normalize();
+        D.Normalize();
+        E.Normalize();
+        REQUIRE(A.Magnitude() == Approx(1));
+        REQUIRE(B.Magnitude() == Approx(1));
+        REQUIRE(C.Magnitude() == Approx(1));
+        REQUIRE(D.Magnitude() == Approx(1));
+        REQUIRE(E.Magnitude() == 0);
 
         D *= 26;
         REQUIRE(D.x() == Approx(24));
@@ -92,16 +92,16 @@ TEST_CASE("Vector3 Dot Product", "[operators]") {
     Vector3 e2 = {0, 1, 0};
     Vector3 e3 = {0, 0, 1};
 
-    REQUIRE(e1.dot(e1) == 1);
-    REQUIRE(e2.dot(e2) == 1);
-    REQUIRE(e3.dot(e3) == 1);
-    REQUIRE(e1.dot(e2) == 0);
-    REQUIRE(e1.dot(e3) == 0);
-    REQUIRE(e2.dot(e3) == 0);
-    REQUIRE(e1.dot(A) == 3);
-    REQUIRE(e2.dot(A) == 4);
-    REQUIRE(e1.dot(B) == 5);
-    REQUIRE(e2.dot(B) == 12);
-    REQUIRE(A.dot(A) == 25);
-    REQUIRE(B.dot(B) == 169);
+    REQUIRE(e1.Dot(e1) == 1);
+    REQUIRE(e2.Dot(e2) == 1);
+    REQUIRE(e3.Dot(e3) == 1);
+    REQUIRE(e1.Dot(e2) == 0);
+    REQUIRE(e1.Dot(e3) == 0);
+    REQUIRE(e2.Dot(e3) == 0);
+    REQUIRE(e1.Dot(A) == 3);
+    REQUIRE(e2.Dot(A) == 4);
+    REQUIRE(e1.Dot(B) == 5);
+    REQUIRE(e2.Dot(B) == 12);
+    REQUIRE(A.Dot(A) == 25);
+    REQUIRE(B.Dot(B) == 169);
 }

@@ -9,10 +9,10 @@ SRC = \
 	Color.cpp \
 	Primitives.cpp \
 	intersect.cpp \
-	light.cpp \
+	Light.cpp \
 	numeric.cpp \
     Screen.cpp \
-	scene.cpp
+	Scene.cpp
 
 SRCDIR = src/
 

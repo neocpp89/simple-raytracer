@@ -4,7 +4,7 @@
 #include "Point3.hpp"
 #include "Vector3.hpp"
 
-namespace SimpleRaytracer {
+namespace simple_raytracer {
 
 class Camera
 {
@@ -16,6 +16,6 @@ class Camera
         Point3 origin_;
 };
 
-} // namespace SimpleRaytracer
+} // namespace simple_raytracer
 
 #endif //SRT_CAMERA_HPP_
