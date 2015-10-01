@@ -14,7 +14,7 @@ namespace SimpleRaytracer {
     we are hitting it from the outside. If the time is negative, we are
     inside the sphere.
 */
-Intersection Sphere::Intersect(const Ray &ray) const
+Intersection Sphere::intersect(const Ray &ray) const
 {
     const Point3 origin = ray.origin();
     const Vector3 direction = ray.direction();

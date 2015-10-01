@@ -21,19 +21,20 @@ class Intersection
         Vector3 surface_normal() const { return surface_normal_; }
 
     private:
-        const bool hit_;
-        const double time_;
-        const Point3 point_;
-        const Vector3 surface_normal_;
+        bool hit_;
+        double time_;
+        Point3 point_;
+        Vector3 surface_normal_;
 };
 
 class MaterialProperties
 {
-    MaterialProperties(const RGBColor &color, double lambertian, double reflectivity)
-        : color_(color), lambertian_(lambertian), reflectivity_(reflectivity) {}
-    RGBColor color() const { return color_; }
-    double lambertian() const { return lambertian_; }
-    double reflectivity() const { return reflectivity_; }
+    public:
+        MaterialProperties(const RGBColor &color, double lambertian, double reflectivity)
+            : color_(color), lambertian_(lambertian), reflectivity_(reflectivity) {}
+        RGBColor color() const { return color_; }
+        double lambertian() const { return lambertian_; }
+        double reflectivity() const { return reflectivity_; }
 
     private:
         RGBColor color_;
@@ -53,7 +54,8 @@ class SceneObject
             This is important: the direction should be normalized before
             the intersection code is called.
         */
-        virtual Intersection Intersect(const Ray &ray) const = 0;
+        virtual Intersection intersect(const Ray &ray) const = 0;
+        MaterialProperties properties() const { return properties_; }
 
     private:
         MaterialProperties properties_;
@@ -67,7 +69,7 @@ class Sphere : public SceneObject
     public:
         Sphere(const Point3 &center, const double radius, const MaterialProperties &properties)
             : SceneObject(properties), center_(center), radius_(radius) {}
-        Intersection Intersect(const Ray &ray) const;
+        Intersection intersect(const Ray &ray) const;
 
     private:
         const Point3 center_;

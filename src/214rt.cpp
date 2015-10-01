@@ -185,6 +185,7 @@ void rt(vec_t *color, int depth, int mdepth, scene_t *scene, ray_t *sr)
 
 int main(int argc, char **argv)
 {
+    /*
 	SimpleRaytracer::Bitmap bmp(3200, 2400);
 	vec_t rt_color;
 	ray_t *sr;
@@ -214,7 +215,12 @@ int main(int argc, char **argv)
     printf("\n");
 
 	bmp.write_file("output.bmp");
+    */
+    SimpleRaytracer::Bitmap bmp(3200, 2400);
+	SimpleRaytracer::Camera camera({0, 0, -1000});
+    SimpleRaytracer::SceneProperties scene_props({0,0,0}, 0.1);
 
+    bmp.write_file("output.bmp");
 	return 0;
 }
 

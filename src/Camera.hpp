@@ -8,8 +8,9 @@ namespace SimpleRaytracer {
 
 class Camera
 {
-    Camera(const Point3 &origin) : origin_(origin) {}
-    Point3 origin() const { return origin_; }
+    public:
+        Camera(const Point3 &origin) : origin_(origin) {}
+        Point3 origin() const { return origin_; }
 
     private:
         Point3 origin_;
