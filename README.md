@@ -39,5 +39,9 @@ Calling the program as
     simple-raytracer demo.bmp 3200 2400
 
 will create a 3200x2400 pixel file called `demo.bmp`.
+
+It takes about 11 seconds to do this with the builtin demo scene on my laptop with an i5-4200U running Xubuntu 15.04.
+It takes about 5.5 seconds on my Desktop with an i5-2500k running Xubuntu 15.04.
+
 You can change the filename, and the vertical and horizontal dimensions.
 The aspect ratio of the demo screen is 4:3, so picking other aspect ratios will cause the scene to look skewed when viewing the bitmap unless the pixels are not square.
