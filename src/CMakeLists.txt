@@ -1,4 +1,4 @@
-SET(DRIVER_SOURCES 214rt.cpp)
+SET(DRIVER_SOURCES main.cpp)
 SET(LIB_SOURCES
         Bitmap.cpp
         Color.cpp

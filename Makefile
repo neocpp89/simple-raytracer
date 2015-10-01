@@ -3,7 +3,7 @@ CC = g++
 BIN = simple-raytracer
 CFLAGS = -O3 -Wall -std=c++11 -march=native
 SRC = \
-	214rt.cpp \
+	main.cpp \
 	Bitmap.cpp \
 	Camera.cpp \
 	Color.cpp \
