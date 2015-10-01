@@ -91,6 +91,16 @@ class Sphere : public SceneObject
 
 /*
     Another classic object, and also simple to calculate.
+
+    The definition is a bit strange compared to what is normally done.
+
+    The plane is defined by a unit normal and a distance from the origin.
+    This is where the plane would be if you followed the unit vector BACK
+    from the origin.
+
+    So a plane which is facing upwards on Z (0,1,0) with a distance of 100
+    is 100 units BELOW the origin. If the distance is -100, it still faces
+    upwards, but is now 100 units ABOVE the origin.
 */
 class Plane : public SceneObject
 {

@@ -60,6 +60,17 @@ Intersection Sphere::Intersect(const Ray &ray) const
     return Intersection(hit, t, point, surface_normal);
 }
 
+/*
+    Since the planes are infinite, the only way we don't have
+    an intersection is if the ray is going parallel to it.
+
+    We also take the convention that there is no intersection if we
+    are on the wrong side of the plane (there isn't a really good
+    reason for this, and it can be changed).
+
+    The basic algorithm is to get the projected distance over the
+    projected unit vector, which gives us the travel time.
+*/
 Intersection Plane::Intersect(const Ray &ray) const
 {
     const Vector3 direction = ray.direction();
