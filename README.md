@@ -29,3 +29,15 @@ Other Components
 I wrote most of the code contained within this repository; the main exception is the unit testing framework [catch][1], which I did not write.
 
 [1]: https://github.com/philsquared/Catch
+
+Running
+-------
+
+The driver program `simple-raytracer` has a compiled-in demo scene.
+Calling the program as
+
+    simple-raytracer demo.bmp 3200 2400
+
+will create a 3200x2400 pixel file called `demo.bmp`.
+You can change the filename, and the vertical and horizontal widths.
+The aspect ratio of the demo screen is 4:3, so picking other aspect ratios will cause the scene to look skewed when viewing the bitmap.

@@ -50,8 +50,8 @@ int main(int argc, char **argv)
     const int width = std::stoi(argv[2]);
     const int height = std::stoi(argv[3]);
 
-    if (width < 0 || height < 0) {
-        std::cout << "Need positive sizes for image dimensions.\n";
+    if (width <= 0 || height <= 0) {
+        std::cout << "Need strictly positive sizes for image dimensions.\n";
         return 0;
     }
 
