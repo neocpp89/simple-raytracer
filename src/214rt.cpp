@@ -216,9 +216,22 @@ int main(int argc, char **argv)
 
 	bmp.write_file("output.bmp");
     */
-    SimpleRaytracer::Bitmap bmp(3200, 2400);
+    if (argc != 4) {
+        std::cout << "usage: " << argv[0] << " BITMAP-FILE WIDTH HEIGHT";
+        return 0;
+    }
+    const std::string bmp_filename(argv[1]);
+    const int width = std::stoi(argv[2]);
+    const int height = std::stoi(argv[3]);
+
+    if (width < 0 || height < 0) {
+        std::cout << "Need positive sizes for image dimensions.\n";
+        return 0;
+    }
+
+    SimpleRaytracer::Bitmap bmp(width, height);
 	SimpleRaytracer::Camera camera({0, 0, -1000});
-    SimpleRaytracer::SceneProperties scene_props({0,0,0}, 0.1);
+    SimpleRaytracer::SceneProperties scene_props({0,0,0}, 0.2);
     SimpleRaytracer::Point3 top_left({-160, 120, -200});
     SimpleRaytracer::Point3 top_right({160, 120, -200});
     SimpleRaytracer::Point3 bottom_left({-160, -120, -200});
@@ -235,14 +248,15 @@ int main(int argc, char **argv)
     scene.add_object(new SimpleRaytracer::Sphere(sphere_center, sphere_radius, material_props));
     scene.add_object(new SimpleRaytracer::Sphere({200, 0, 0}, 50, material_props));
 
-    scene.render();
+    const int max_bounces = 16;
+    scene.render(max_bounces);
     for (int i = 0; i < bmp.height(); i++) {
         for (int j = 0; j < bmp.width(); j++) {
             bmp.set_pixel_ij(i, j, scene.get_pixel(i, j));
         }
     }
 
-    bmp.write_file("output.bmp");
+    bmp.write_file(bmp_filename);
 	return 0;
 }
 

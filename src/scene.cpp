@@ -278,6 +278,11 @@ Intersection Scene::find_closest_object_along_ray(const Ray &ray, size_t &index)
     return closest;
 }
 
+/*
+    Go through and render each pixel in our screen to compose the image.
+
+    This is actually trivially parallelizable since each pixel is independent.
+*/
 void Scene::render(int max_depth)
 {
     for (int i = 0; i < screen_.rows(); i++) {
@@ -329,8 +334,8 @@ RGBColor Scene::render(const Ray &ray, int depth, int max_depth) const
     color_diff.mulitplicative_scale(properties_.ambient_lighting());
     rgb.additive_blend(color_diff); 
 
+    if (lambertian > 0) {
     /*
-    if (lam > 0) {
         total_lam_factor = 0;
         for (i = 0; i < scene->nlights; i++) {
             light_dir = VDUP(scene->lights[i]->origin);
@@ -379,8 +384,8 @@ RGBColor Scene::render(const Ray &ray, int depth, int max_depth) const
             color->x2 += (cvl->x2);
             color->x3 += (cvl->x3);
         }
-    }
     */
+    }
 
     if (reflectivity > 0) {
         auto const direction = ray.direction();

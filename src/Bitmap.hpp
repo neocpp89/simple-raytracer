@@ -1,5 +1,6 @@
 #ifndef SRT_BITMAP_HPP_
 #define SRT_BITMAP_HPP_
+#include <string>
 #include <vector>
 #include "bitmap.h"
 #include "Color.hpp"
@@ -36,7 +37,7 @@ class Bitmap
 
            I haven't thought of a good way to fix this yet.
          */
-        void write_file(const char *file) const;
+        void write_file(const std::string &file) const;
 
     private:
         const int width_;

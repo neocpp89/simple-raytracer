@@ -1,5 +1,6 @@
 #include <fstream>
 #include <vector>
+#include <string>
 
 #include <cstring>
 #include <cmath>
@@ -83,7 +84,7 @@ RGBColor Bitmap::get_pixel(int x, int y) const
     return rgb;
 }
 
-void Bitmap::write_file(const char *filename) const
+void Bitmap::write_file(const std::string &filename) const
 {
     std::vector<uint8_t> rawdata(filesize_);
     uint8_t *raw = &rawdata[0];
