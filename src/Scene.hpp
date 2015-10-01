@@ -67,6 +67,10 @@ class Scene
             It gets captured by the unique pointer anyways, so the caller
             doesn't have to worry about memory management.
 
+            This bears repeating: don't worry about manually freeing the objects
+            you insert into the scene object; they are freed automatically by
+            the unique_ptr.
+
             // void add_object(std::unique_ptr<SceneObject> object) { objects_.emplace_back(std::move(object)); }
             // void add_light(std::unique_ptr<SceneLight> light) { lights_.emplace_back(std::move(light)); }
         */
