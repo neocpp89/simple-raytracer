@@ -1,21 +1,23 @@
 # Project: simple-raytracer
 CC = g++
 BIN = simple-raytracer
-CFLAGS = -O3 -Wall -std=c++11 -march=native
-SRC = \
-	main.cpp \
+CFLAGS = -O3 -Wall -std=c++11 -march=native -I $(LIBSRCDIR) -I $(DRIVERSRCDIR)
+LIBSRC = \
 	Bitmap.cpp \
 	Camera.cpp \
 	Color.cpp \
 	Primitives.cpp \
-	intersect.cpp \
 	Light.cpp \
     Screen.cpp \
 	Scene.cpp
 
-SRCDIR = src/
+DRIVERSRC = main.cpp
 
-FP_SRC = $(addprefix $(SRCDIR), $(SRC))
+LIBSRCDIR = src/libsrt/
+DRIVERSRCDIR = src/driver/
+
+FP_LIBSRC = $(addprefix $(LIBSRCDIR), $(LIBSRC))
+FP_DRIVERSRC= $(addprefix $(DRIVERSRCDIR), $(DRIVERSRC))
 
 DOXYCONF = Doxyfile
 
@@ -30,8 +32,8 @@ clean:
 doc: $(DOXYCONF)
 	doxygen $(DOXYCONF)
 
-$(DOXYCONF): $(FP_SRC)
+$(DOXYCONF): $(FP_LIBSRC) $(FP_DRIVERSRC)
 	doxygen -g $(DOXYCONF)
 
-$(BIN): $(FP_SRC)
+$(BIN): $(FP_LIBSRC) $(FP_DRIVERSRC)
 	$(CC) $(CFLAGS) -o $@ $^
