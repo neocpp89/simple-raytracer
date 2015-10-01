@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Primitives.hpp"
 
 namespace SimpleRaytracer {
@@ -52,6 +53,7 @@ Intersection Sphere::intersect(const Ray &ray) const
 	}
 
     hit = true;
+    // std::cout << "hit!\n";
 	Point3 point = origin + (t * direction);
 	const double s = 1.0/radius_;
 	Vector3 surface_normal = s * (point - center_);

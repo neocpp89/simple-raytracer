@@ -37,9 +37,20 @@ Bitmap::Bitmap(int width, int height) : width_(width), height_(height), data_(wi
     return;
 }
 
+void Bitmap::set_pixel_ij(int i, int j, const RGBColor &c)
+{
+    if (j >= width_ || i >= height_ || i < 0 || j < 0) {
+        return;
+    }
+    data_[i * width_ + j].red = c.r();
+    data_[i * width_ + j].green = c.g();
+    data_[i * width_ + j].blue = c.b();
+    return;
+}
+
 void Bitmap::set_pixel(int x, int y, const RGBColor &c)
 {
-    if (x > width_ || y > height_ || x < 0 || y < 0) {
+    if (x >= width_ || y >= height_ || x < 0 || y < 0) {
         return;
     }
     data_[(bi_.height - y - 1) * bi_.width + x].red = c.r();
@@ -48,9 +59,21 @@ void Bitmap::set_pixel(int x, int y, const RGBColor &c)
     return;
 }
 
+RGBColor Bitmap::get_pixel_ij(int i, int j) const
+{
+    if (j >= width_ || i >= height_ || i < 0 || j < 0) {
+        return RGBColor(0, 0, 0);
+    }
+    const int r = data_[i * width_ + j].red;
+    const int g = data_[i * width_ + j].green;
+    const int b = data_[i * width_ + j].blue;
+    RGBColor rgb(r, g, b);
+    return rgb;
+}
+
 RGBColor Bitmap::get_pixel(int x, int y) const
 {
-    if (x > width_ || y > height_ || x < 0 || y < 0) {
+    if (x >= width_ || y >= height_ || x < 0 || y < 0) {
         return RGBColor(0, 0, 0);
     }
     const int r = data_[(bi_.height - y - 1) * bi_.width + x].red;

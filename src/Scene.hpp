@@ -58,8 +58,20 @@ class Scene
         void render(int max_depth = 8);
         RGBColor get_pixel(int i, int j) { return pixel_data_[indexof(i, j)]; }
 
-        void add_object(std::unique_ptr<SceneObject> object) { objects_.push_back(std::move(object)); }
-        void add_light(std::unique_ptr<SceneLight> light) { lights_.push_back(std::move(light)); }
+
+        /*
+            I feel a bit uneasy about this due to the pointer, but I can't
+            think of a better way to do it. Something like the below is close
+            to what I want, but isn't quite right.
+
+            It gets captured by the unique pointer anyways, so the caller
+            doesn't have to worry about memory management.
+
+            // void add_object(std::unique_ptr<SceneObject> object) { objects_.emplace_back(std::move(object)); }
+            // void add_light(std::unique_ptr<SceneLight> light) { lights_.emplace_back(std::move(light)); }
+        */
+        void add_object(SceneObject *object) { objects_.emplace_back(object); }
+        void add_light(SceneLight *light) { lights_.emplace_back(light); }
 
     private:
         const Camera camera_;
