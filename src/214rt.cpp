@@ -41,23 +41,23 @@ int main(int argc, char **argv)
     const double sphere_radius = 100;
     simple_raytracer::Scene scene(camera, screen, scene_props);
 
-    scene.add_object(new simple_raytracer::Sphere(sphere_center, sphere_radius, material_props));
-    scene.add_object(new simple_raytracer::Sphere({200, 0, 0}, 50, {{103,0,255}, 0.5, 0.5}));
-    scene.add_object(new simple_raytracer::Sphere({630, 213, 0}, 50, {{103,20,255}, 0.5, 0.5}));
-    scene.add_object(new simple_raytracer::Sphere({-420, 12, 0}, 50, {{103,60,255}, 0.5, 0.5}));
-    scene.add_object(new simple_raytracer::Sphere({120, 12, 0}, 50, {{103,70,255}, 0.5, 0.5}));
-    scene.add_object(new simple_raytracer::Sphere({-110, -12, 0}, 50, {{103,80,255}, 0.5, 0.5}));
-    scene.add_object(new simple_raytracer::Sphere({520, -162, 0}, 50, {{103,100,255}, 0.5, 0.5}));
+    scene.AddObject(new simple_raytracer::Sphere(sphere_center, sphere_radius, material_props));
+    scene.AddObject(new simple_raytracer::Sphere({200, 0, 0}, 50, {{103,0,255}, 0.5, 0.5}));
+    scene.AddObject(new simple_raytracer::Sphere({630, 213, 0}, 50, {{103,20,255}, 0.5, 0.5}));
+    scene.AddObject(new simple_raytracer::Sphere({-420, 12, 0}, 50, {{103,60,255}, 0.5, 0.5}));
+    scene.AddObject(new simple_raytracer::Sphere({120, 12, 0}, 50, {{103,70,255}, 0.5, 0.5}));
+    scene.AddObject(new simple_raytracer::Sphere({-110, -12, 0}, 50, {{103,80,255}, 0.5, 0.5}));
+    scene.AddObject(new simple_raytracer::Sphere({520, -162, 0}, 50, {{103,100,255}, 0.5, 0.5}));
 
-    scene.add_light(new simple_raytracer::ScenePointLight({500, 500, 0}, {255, 255, 255}, 1.0));
-    scene.add_light(new simple_raytracer::ScenePointLight({-500, 500, 0}, {255, 200, 255}, 0.5));
-    scene.add_light(new simple_raytracer::ScenePointLight({-300, 700, 0}, {255, 255, 255}, 1.0));
+    scene.AddLight(new simple_raytracer::ScenePointLight({500, 500, 0}, {255, 255, 255}, 1.0));
+    scene.AddLight(new simple_raytracer::ScenePointLight({-500, 500, 0}, {255, 200, 255}, 0.5));
+    scene.AddLight(new simple_raytracer::ScenePointLight({-300, 700, 0}, {255, 255, 255}, 1.0));
 
     const int max_bounces = 16;
-    scene.render(max_bounces);
+    scene.Render(max_bounces);
     for (int i = 0; i < bmp.height(); i++) {
         for (int j = 0; j < bmp.width(); j++) {
-            bmp.SetPixelImageCoordinates(i, j, scene.get_pixel(i, j));
+            bmp.SetPixelImageCoordinates(i, j, scene.GetPixel(i, j));
         }
     }
 

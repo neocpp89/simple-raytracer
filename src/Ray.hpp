@@ -12,6 +12,7 @@ class Ray
             : origin_(origin), direction_(direction) {}
         Point3 origin() const { return origin_; }
         Vector3 direction() const { return direction_; }
+
     private:
         const Point3 origin_;
         const Vector3 direction_;

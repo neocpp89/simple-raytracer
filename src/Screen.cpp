@@ -3,7 +3,7 @@
 
 namespace simple_raytracer {
 
-void Screen::set_point(int i, int j, const Point3 &point)
+void Screen::SetPoint(int i, int j, const Point3 &point)
 {
     if (i < 0 || i >= rows_ || j < 0 || j >= columns_) {
         return;
@@ -12,7 +12,7 @@ void Screen::set_point(int i, int j, const Point3 &point)
     return;
 }
 
-Point3 Screen::get_point(int i, int j) const
+Point3 Screen::GetPoint(int i, int j) const
 {
     if (i < 0 || i >= rows_ || j < 0 || j >= columns_) {
         return Point3(0,0,0);
@@ -20,17 +20,17 @@ Point3 Screen::get_point(int i, int j) const
     return point_array_[i * columns_ + j];
 }
 
-void Screen::generate_points_()
+void Screen::GeneratePoints()
 {
     auto dx = top_right_ - top_left_;
     auto dy = bottom_left_ - top_left_;
 
     dx *= 1.0 / static_cast<double>(columns_ - 1);
     dy *= 1.0 / static_cast<double>(rows_ - 1);
-    
+
     for (int i = 0; i < rows_; i++) {
         for (int j = 0; j < columns_; j++) {
-            set_point(i, j, top_left_ + i*dy + j*dx);
+            SetPoint(i, j, top_left_ + i*dy + j*dx);
         }
     }
     return;

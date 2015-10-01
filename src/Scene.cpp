@@ -9,215 +9,215 @@ double hgradz(double x, double y, double z);
 
 double hfn(double x, double y, double z)
 {
-	double s = (2*z*z + x*x + y*y - 1);
-	return (s*s*s + z*z*y*y*y/10 + x*x*y*y*y);
+    double s = (2*z*z + x*x + y*y - 1);
+    return (s*s*s + z*z*y*y*y/10 + x*x*y*y*y);
 }
 
 double hgradx(double x, double y, double z)
 {
-	double s = (x*x + y*y + 2*z*z - 1);
-	return (6*x*s*s + 2*x*y*y*y);
+    double s = (x*x + y*y + 2*z*z - 1);
+    return (6*x*s*s + 2*x*y*y*y);
 }
 
 double hgrady(double x, double y, double z)
 {
-	double s = (x*x + y*y + 2*z*z - 1);
-	return (6*y*s*s + 3*x*x*y*y + 3*z*z*y*y/10);
+    double s = (x*x + y*y + 2*z*z - 1);
+    return (6*y*s*s + 3*x*x*y*y + 3*z*z*y*y/10);
 }
 
 double hgradz(double x, double y, double z)
 {
-	double s = (x*x + y*y + 2*z*z - 1);
-	return (12*z*s*s + z*y*y*y/5);
+    double s = (x*x + y*y + 2*z*z - 1);
+    return (12*z*s*s + z*y*y*y/5);
 }
 #endif
 
 #if 0
 /*
-	Not a generic function, setup specifically for a scene we want to render.
+    Not a generic function, setup specifically for a scene we want to render.
 */
 scene_t *scene_init(int x, int y, double zoom)
 {
-	int i;
-	scene_t *s = new scene_t;
+    int i;
+    scene_t *s = new scene_t;
 
-	s->camera = v(0, 0, -1000);
-	s->screen_origin = v(0, 0, 0);
-	s->screenx = x;
-	s->screeny = y;
-	s->screenrays = screenrays_precomp(s->screen_origin, s->camera, s->screenx, s->screeny, zoom);
+    s->camera = v(0, 0, -1000);
+    s->screen_origin = v(0, 0, 0);
+    s->screenx = x;
+    s->screeny = y;
+    s->screenrays = screenrays_precomp(s->screen_origin, s->camera, s->screenx, s->screeny, zoom);
 
 
-	s->nlights = 3;
-	s->nobjects = 7;
-	s->lights = new light_t *[s->nlights];
-	s->objects = new fnobject_t *[s->nobjects];
+    s->nlights = 3;
+    s->nobjects = 7;
+    s->lights = new light_t *[s->nlights];
+    s->objects = new fnobject_t *[s->nobjects];
 
-	i = 0;
-	s->lights[i] = new light_t;
-	s->lights[i]->origin = v(0, 0, 0);
-	s->lights[i]->color = v(0xff, 0xff, 0xff);
-	s->lights[i]->intensity = 1.0;
-	i++;
+    i = 0;
+    s->lights[i] = new light_t;
+    s->lights[i]->origin = v(0, 0, 0);
+    s->lights[i]->color = v(0xff, 0xff, 0xff);
+    s->lights[i]->intensity = 1.0;
+    i++;
 
-	s->lights[i] = new light_t;
-	s->lights[i]->origin = v(500, 1000, 0);
-	//s->lights[i]->origin = v(300, 150, 0);
-	s->lights[i]->color = v(0xff, 0xff, 0xff);
-	s->lights[i]->intensity = 1.0;
-	i++;
+    s->lights[i] = new light_t;
+    s->lights[i]->origin = v(500, 1000, 0);
+    //s->lights[i]->origin = v(300, 150, 0);
+    s->lights[i]->color = v(0xff, 0xff, 0xff);
+    s->lights[i]->intensity = 1.0;
+    i++;
 
-	s->lights[i] = new light_t;
-	s->lights[i]->origin = v(1000, 500, 0);
-	//s->lights[i]->origin = v(200, 150, 0);
-	s->lights[i]->color = v(0xff, 0xff, 0xff);
-	s->lights[i]->intensity = 1.0;
-	i++;
+    s->lights[i] = new light_t;
+    s->lights[i]->origin = v(1000, 500, 0);
+    //s->lights[i]->origin = v(200, 150, 0);
+    s->lights[i]->color = v(0xff, 0xff, 0xff);
+    s->lights[i]->intensity = 1.0;
+    i++;
 
-	s->nlights = i;
-	s->ambient = 0.05;
+    s->nlights = i;
+    s->ambient = 0.05;
 
-	i = 0;
-	s->objects[i] = new fnobject_t;
-	s->objects[i]->type = FNSPHERE;
-	s->objects[i]->lambertian = 0.3;
-	s->objects[i]->reflectivity = 0.7;
-	s->objects[i]->color = v(0x20, 0x20, 0xf0);
-	s->objects[i]->object.sphere = new sphere_t;
-	s->objects[i]->object.sphere->origin = v(-100, 0, 100);
-	s->objects[i]->object.sphere->radius = 75;
-	i++;
+    i = 0;
+    s->objects[i] = new fnobject_t;
+    s->objects[i]->type = FNSPHERE;
+    s->objects[i]->lambertian = 0.3;
+    s->objects[i]->reflectivity = 0.7;
+    s->objects[i]->color = v(0x20, 0x20, 0xf0);
+    s->objects[i]->object.sphere = new sphere_t;
+    s->objects[i]->object.sphere->origin = v(-100, 0, 100);
+    s->objects[i]->object.sphere->radius = 75;
+    i++;
 
-	s->objects[i] = new fnobject_t;
-	s->objects[i]->type = FNSPHERE;
-	s->objects[i]->lambertian = 0.7;
-	s->objects[i]->reflectivity = 0.3;
-	s->objects[i]->color = v(0xf0, 0x20, 0x20);
-	s->objects[i]->object.sphere = new sphere_t;
-	s->objects[i]->object.sphere->origin = v(100, 0, 100);
-	s->objects[i]->object.sphere->radius = 75;
-	i++;
+    s->objects[i] = new fnobject_t;
+    s->objects[i]->type = FNSPHERE;
+    s->objects[i]->lambertian = 0.7;
+    s->objects[i]->reflectivity = 0.3;
+    s->objects[i]->color = v(0xf0, 0x20, 0x20);
+    s->objects[i]->object.sphere = new sphere_t;
+    s->objects[i]->object.sphere->origin = v(100, 0, 100);
+    s->objects[i]->object.sphere->radius = 75;
+    i++;
 
     /*
-	s->objects[i] = new fnobject_t;
-	s->objects[i]->type = FNSPHERE;
-	s->objects[i]->lambertian = 0.1;
-	s->objects[i]->reflectivity = 0.9;
-	s->objects[i]->color = v(0x20, 0xf0, 0x20);
-	s->objects[i]->object.sphere = new sphere_t;
-	s->objects[i]->object.sphere->origin = v(0, 50, 50);
-	s->objects[i]->object.sphere->radius = 25;
-	i++;
+    s->objects[i] = new fnobject_t;
+    s->objects[i]->type = FNSPHERE;
+    s->objects[i]->lambertian = 0.1;
+    s->objects[i]->reflectivity = 0.9;
+    s->objects[i]->color = v(0x20, 0xf0, 0x20);
+    s->objects[i]->object.sphere = new sphere_t;
+    s->objects[i]->object.sphere->origin = v(0, 50, 50);
+    s->objects[i]->object.sphere->radius = 25;
+    i++;
     */
 
-	s->objects[i] = new fnobject_t;
-	s->objects[i]->type = FNSPHERE;
-	s->objects[i]->lambertian = 0.1;
-	s->objects[i]->reflectivity = 0.9;
-	s->objects[i]->color = v(0xf0, 0xf0, 0x20);
-	s->objects[i]->object.sphere = new sphere_t;
-	s->objects[i]->object.sphere->origin = v(-200, 50, 50);
-	s->objects[i]->object.sphere->radius = 25;
-	i++;
+    s->objects[i] = new fnobject_t;
+    s->objects[i]->type = FNSPHERE;
+    s->objects[i]->lambertian = 0.1;
+    s->objects[i]->reflectivity = 0.9;
+    s->objects[i]->color = v(0xf0, 0xf0, 0x20);
+    s->objects[i]->object.sphere = new sphere_t;
+    s->objects[i]->object.sphere->origin = v(-200, 50, 50);
+    s->objects[i]->object.sphere->radius = 25;
+    i++;
 
-	s->objects[i] = new fnobject_t;
-	s->objects[i]->type = FNSPHERE;
-	s->objects[i]->lambertian = 0.1;
-	s->objects[i]->reflectivity = 0.9;
-	s->objects[i]->color = v(0x20, 0x20, 0x20);
-	s->objects[i]->object.sphere = new sphere_t;
-	s->objects[i]->object.sphere->origin = v(200, 50, 50);
-	s->objects[i]->object.sphere->radius = 25;
-	i++;
+    s->objects[i] = new fnobject_t;
+    s->objects[i]->type = FNSPHERE;
+    s->objects[i]->lambertian = 0.1;
+    s->objects[i]->reflectivity = 0.9;
+    s->objects[i]->color = v(0x20, 0x20, 0x20);
+    s->objects[i]->object.sphere = new sphere_t;
+    s->objects[i]->object.sphere->origin = v(200, 50, 50);
+    s->objects[i]->object.sphere->radius = 25;
+    i++;
 
-	s->objects[i] = new fnobject_t;
-	s->objects[i]->type = FNPLANE;
-	s->objects[i]->lambertian = 0.4;
-	s->objects[i]->reflectivity = 0.6;
-	s->objects[i]->color = v(128, 77, 180);
-	//s->objects[i]->color = v(77, 180, 128);
-	//s->objects[i]->color = v(38, 90, 64);
-	s->objects[i]->object.plane = new plane_t;
-	s->objects[i]->object.plane->normal = v(0, 1, 0);
-	s->objects[i]->object.plane->distance = 100;
-	i++;
+    s->objects[i] = new fnobject_t;
+    s->objects[i]->type = FNPLANE;
+    s->objects[i]->lambertian = 0.4;
+    s->objects[i]->reflectivity = 0.6;
+    s->objects[i]->color = v(128, 77, 180);
+    //s->objects[i]->color = v(77, 180, 128);
+    //s->objects[i]->color = v(38, 90, 64);
+    s->objects[i]->object.plane = new plane_t;
+    s->objects[i]->object.plane->normal = v(0, 1, 0);
+    s->objects[i]->object.plane->distance = 100;
+    i++;
 
-	s->objects[i] = new fnobject_t;
-	s->objects[i]->type = FNIMPLICIT;
-	s->objects[i]->lambertian = 0.1;
-	s->objects[i]->reflectivity = 0.9;
-	s->objects[i]->color = v(0x20, 0x20, 0x20);
-	s->objects[i]->object.implicit = new implicit_t;
-	s->objects[i]->object.implicit->origin = v(0, 50, 50);
-	s->objects[i]->object.implicit->scale = 20;
-	s->objects[i]->object.implicit->bounding_radius= 1.5 * s->objects[i]->object.implicit->scale;
-	s->objects[i]->object.implicit->fn = &hfn;
-	s->objects[i]->object.implicit->gradx = &hgradx;
-	s->objects[i]->object.implicit->grady = &hgrady;
-	s->objects[i]->object.implicit->gradz = &hgradz;
-	i++;
+    s->objects[i] = new fnobject_t;
+    s->objects[i]->type = FNIMPLICIT;
+    s->objects[i]->lambertian = 0.1;
+    s->objects[i]->reflectivity = 0.9;
+    s->objects[i]->color = v(0x20, 0x20, 0x20);
+    s->objects[i]->object.implicit = new implicit_t;
+    s->objects[i]->object.implicit->origin = v(0, 50, 50);
+    s->objects[i]->object.implicit->scale = 20;
+    s->objects[i]->object.implicit->bounding_radius= 1.5 * s->objects[i]->object.implicit->scale;
+    s->objects[i]->object.implicit->fn = &hfn;
+    s->objects[i]->object.implicit->gradx = &hgradx;
+    s->objects[i]->object.implicit->grady = &hgrady;
+    s->objects[i]->object.implicit->gradz = &hgradz;
+    i++;
 
-	s->nobjects = i;
+    s->nobjects = i;
 
-	/*
-	s->objects[i] = new fnobject_t;
-	s->objects[i]->type = FNPLANE;
-	s->objects[i]->lambertian = 0.3;
-	s->objects[i]->reflectivity = 0.7;
-	s->objects[i]->specularity = 0.7;
-	s->objects[i]->color = v(38, 90, 64);
-	s->objects[i]->object.plane = new plane_t;
-	s->objects[i]->object.plane->normal = v(0, -1, 0);
-	s->objects[i]->object.plane->distance = 200;
+    /*
+    s->objects[i] = new fnobject_t;
+    s->objects[i]->type = FNPLANE;
+    s->objects[i]->lambertian = 0.3;
+    s->objects[i]->reflectivity = 0.7;
+    s->objects[i]->specularity = 0.7;
+    s->objects[i]->color = v(38, 90, 64);
+    s->objects[i]->object.plane = new plane_t;
+    s->objects[i]->object.plane->normal = v(0, -1, 0);
+    s->objects[i]->object.plane->distance = 200;
 
-	i++;
-	s->objects[i] = new fnobject_t;
-	s->objects[i]->type = FNPLANE;
-	s->objects[i]->lambertian = 0.3;
-	s->objects[i]->reflectivity = 0.7;
-	s->objects[i]->specularity = 0.7;
-	s->objects[i]->color = v(38, 90, 64);
-	s->objects[i]->object.plane = new plane_t;
-	s->objects[i]->object.plane->normal = v(1, 0, 0);
-	s->objects[i]->object.plane->distance = 400;
+    i++;
+    s->objects[i] = new fnobject_t;
+    s->objects[i]->type = FNPLANE;
+    s->objects[i]->lambertian = 0.3;
+    s->objects[i]->reflectivity = 0.7;
+    s->objects[i]->specularity = 0.7;
+    s->objects[i]->color = v(38, 90, 64);
+    s->objects[i]->object.plane = new plane_t;
+    s->objects[i]->object.plane->normal = v(1, 0, 0);
+    s->objects[i]->object.plane->distance = 400;
 
-	i++;
-	s->objects[i] = new fnobject_t;
-	s->objects[i]->type = FNPLANE;
-	s->objects[i]->lambertian = 0.3;
-	s->objects[i]->reflectivity = 0.7;
-	s->objects[i]->specularity = 0.7;
-	s->objects[i]->color = v(38, 90, 64);
-	s->objects[i]->object.plane = new plane_t;
-	s->objects[i]->object.plane->normal = v(-1, 0, 0);
-	s->objects[i]->object.plane->distance = 400;
+    i++;
+    s->objects[i] = new fnobject_t;
+    s->objects[i]->type = FNPLANE;
+    s->objects[i]->lambertian = 0.3;
+    s->objects[i]->reflectivity = 0.7;
+    s->objects[i]->specularity = 0.7;
+    s->objects[i]->color = v(38, 90, 64);
+    s->objects[i]->object.plane = new plane_t;
+    s->objects[i]->object.plane->normal = v(-1, 0, 0);
+    s->objects[i]->object.plane->distance = 400;
 
-	i++;
-	s->objects[i] = new fnobject_t;
-	s->objects[i]->type = FNPLANE;
-	s->objects[i]->lambertian = 0.3;
-	s->objects[i]->reflectivity = 0.7;
-	s->objects[i]->specularity = 0.7;
-	s->objects[i]->color = v(38, 90, 64);
-	s->objects[i]->object.plane = new plane_t;
-	s->objects[i]->object.plane->normal = v(0, 0, -1);
-	s->objects[i]->object.plane->distance = 400;*/
+    i++;
+    s->objects[i] = new fnobject_t;
+    s->objects[i]->type = FNPLANE;
+    s->objects[i]->lambertian = 0.3;
+    s->objects[i]->reflectivity = 0.7;
+    s->objects[i]->specularity = 0.7;
+    s->objects[i]->color = v(38, 90, 64);
+    s->objects[i]->object.plane = new plane_t;
+    s->objects[i]->object.plane->normal = v(0, 0, -1);
+    s->objects[i]->object.plane->distance = 400;*/
 
-	/*srand(0x01);
+    /*srand(0x01);
 
-	for (i = 6; i < s->nobjects; i++) {
-		s->objects[i] = new fnobject_t;
-		s->objects[i]->type = FNSPHERE;
-		s->objects[i]->lambertian = 0.1;
-		s->objects[i]->reflectivity = 0.9;
-		s->objects[i]->specularity = 0.9;
-		s->objects[i]->color = v(0xf0, 0xf0, 0xf0);
-		s->objects[i]->object.sphere = new sphere_t;
-		s->objects[i]->object.sphere->origin = v(rand() % 1000 - 300 , rand() % 384 + 50, 100);
-		s->objects[i]->object.sphere->radius = rand() % 30 + 20;
-	}*/
+    for (i = 6; i < s->nobjects; i++) {
+        s->objects[i] = new fnobject_t;
+        s->objects[i]->type = FNSPHERE;
+        s->objects[i]->lambertian = 0.1;
+        s->objects[i]->reflectivity = 0.9;
+        s->objects[i]->specularity = 0.9;
+        s->objects[i]->color = v(0xf0, 0xf0, 0xf0);
+        s->objects[i]->object.sphere = new sphere_t;
+        s->objects[i]->object.sphere->origin = v(rand() % 1000 - 300 , rand() % 384 + 50, 100);
+        s->objects[i]->object.sphere->radius = rand() % 30 + 20;
+    }*/
 
-	return s;
+    return s;
 }
 #endif
 
@@ -241,7 +241,7 @@ namespace simple_raytracer {
 
 constexpr double DELTA = 1e-6;
 
-int Scene::indexof(int i, int j) const
+int Scene::IndexOf(int i, int j) const
 {
     if (i <= 0 || i >= screen_.rows() || j <= 0 || j >= screen_.columns()) {
         return 0;
@@ -254,20 +254,20 @@ int Scene::indexof(int i, int j) const
 
     Find the object which is closest to the camera, so we can bounce off that.
 */
-Intersection Scene::find_closest_object_along_ray(const Ray &ray, size_t &index) const
+Intersection Scene::FindClosestObjectAlongRay(const Ray &ray, size_t &index) const
 {
     Intersection closest;
     size_t min_idx = 0;
-	for (size_t i = 0; i < objects_.size(); i++) {
+    for (size_t i = 0; i < objects_.size(); i++) {
         auto const &object = objects_[i];
-        auto intersection = object->intersect(ray);
+        auto intersection = object->Intersect(ray);
         if (intersection.hit()) {
             if (closest.hit() == false || intersection.time() < closest.time()) {
                 closest = intersection;
                 min_idx = i;
             }
         }
-	}
+    }
     index = min_idx;
     return closest;
 }
@@ -277,21 +277,21 @@ Intersection Scene::find_closest_object_along_ray(const Ray &ray, size_t &index)
 
     This is actually trivially parallelizable since each pixel is independent.
 */
-void Scene::render(int max_depth)
+void Scene::Render(int max_depth)
 {
     for (int i = 0; i < screen_.rows(); i++) {
         for (int j = 0; j < screen_.columns(); j++) {
-            Vector3 direction = screen_.get_point(i, j) - camera_.origin();
+            const Point3 pixel_point = screen_.GetPoint(i, j);
+            Vector3 direction = pixel_point - camera_.origin();
             direction.Normalize();
-            Ray ray(screen_.get_point(i, j), direction);
-            pixel_data_[indexof(i, j)] = render(ray, 0, max_depth);
-            // std::cout << "("<< i << ", "  << j << "): " << screen_.get_point(i, j) << '\n';
+            Ray ray(pixel_point, direction);
+            pixel_data_[IndexOf(i, j)] = Render(ray, 0, max_depth);
         }
     }
     return;
 }
 
-RGBColor Scene::render(const Ray &ray, int depth, int max_depth) const
+RGBColor Scene::Render(const Ray &ray, int depth, int max_depth) const
 {
     /*
         Ray has bounced too many times, return the background color.
@@ -306,7 +306,7 @@ RGBColor Scene::render(const Ray &ray, int depth, int max_depth) const
         If no objects are in the way, we just return the background color.
     */
     size_t min_idx = 0;
-    auto closest = find_closest_object_along_ray(ray, min_idx);
+    auto closest = FindClosestObjectAlongRay(ray, min_idx);
 
     if (closest.hit() == false) {
         return properties_.bgcolor();
@@ -327,7 +327,7 @@ RGBColor Scene::render(const Ray &ray, int depth, int max_depth) const
 
     RGBColor color_diff = object_color;
     color_diff.mulitplicative_scale(properties_.ambient_lighting());
-    rgb.additive_blend(color_diff); 
+    rgb.additive_blend(color_diff);
 
     if (lambertian > 0) {
         double total_lambertian_factor = 0;
@@ -343,7 +343,7 @@ RGBColor Scene::render(const Ray &ray, int depth, int max_depth) const
             double current_lambertian_factor = LambertianFactor(light_direction, closest.surface_normal());
             if (current_lambertian_factor > 0) {
                 size_t shadow_min_idx = 0;
-                Intersection shadow_closest = find_closest_object_along_ray(shadow, shadow_min_idx);
+                Intersection shadow_closest = FindClosestObjectAlongRay(shadow, shadow_min_idx);
                 if (shadow_closest.hit() == false ||
                     (shadow_closest.time() * shadow_closest.time() >= light_distance_squared)) {
                     total_lambertian_factor += current_lambertian_factor;
@@ -376,11 +376,11 @@ RGBColor Scene::render(const Ray &ray, int depth, int max_depth) const
     if (reflectivity > 0) {
         const Vector3 reflected_direction = reflection(ray.direction(), closest.surface_normal());
         const Ray reflect(perturbed_point, reflected_direction);
-        RGBColor reflection_rgb = render(reflect, depth+1, max_depth);
+        RGBColor reflection_rgb = Render(reflect, depth+1, max_depth);
         reflection_rgb.mulitplicative_scale(reflectivity);
         rgb.additive_blend(reflection_rgb);
     }
-	return rgb;
+    return rgb;
 }
 
 } // namespace simple_raytracer

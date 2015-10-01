@@ -14,13 +14,13 @@ class Screen
             top_left_(top_left), top_right_(top_right), bottom_left_(bottom_left),
             rows_(rows), columns_(columns), point_array_(rows*columns, {0, 0, 0})
         {
-            generate_points_();
+            GeneratePoints();
         }
         int rows() const { return rows_; }
         int columns() const { return columns_; }
 
-        void set_point(int i, int j, const Point3 &point);
-        Point3 get_point(int i, int j) const;
+        void SetPoint(int i, int j, const Point3 &point);
+        Point3 GetPoint(int i, int j) const;
 
     private:
         const Point3 top_left_;
@@ -30,7 +30,7 @@ class Screen
         const int columns_;
         std::vector<Point3> point_array_;
 
-        void generate_points_();
+        void GeneratePoints();
 };
 
 } // namespace simple_raytracer

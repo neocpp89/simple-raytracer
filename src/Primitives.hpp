@@ -1,6 +1,5 @@
 #ifndef SRT_PRIMITIVES_HPP_ 
 #define SRT_PRIMITIVES_HPP_
-
 #include "Color.hpp"
 #include "Point3.hpp"
 #include "Vector3.hpp"
@@ -50,12 +49,13 @@ class SceneObject
     public:
         SceneObject(const MaterialProperties &properties) : properties_(properties) {}
         virtual ~SceneObject() {}
+        MaterialProperties properties() const { return properties_; }
+
         /*
             This is important: the direction should be normalized before
             the intersection code is called.
         */
-        virtual Intersection intersect(const Ray &ray) const = 0;
-        MaterialProperties properties() const { return properties_; }
+        virtual Intersection Intersect(const Ray &ray) const = 0;
 
     private:
         MaterialProperties properties_;
@@ -69,7 +69,8 @@ class Sphere : public SceneObject
     public:
         Sphere(const Point3 &center, const double radius, const MaterialProperties &properties)
             : SceneObject(properties), center_(center), radius_(radius) {}
-        Intersection intersect(const Ray &ray) const;
+
+        Intersection Intersect(const Ray &ray) const;
 
     private:
         const Point3 center_;
