@@ -248,6 +248,8 @@ int main(int argc, char **argv)
     scene.add_object(new SimpleRaytracer::Sphere(sphere_center, sphere_radius, material_props));
     scene.add_object(new SimpleRaytracer::Sphere({200, 0, 0}, 50, material_props));
 
+    scene.add_light(new SimpleRaytracer::ScenePointLight({500, 500, 0}, {255, 255, 255}, 1.0));
+
     const int max_bounces = 16;
     scene.render(max_bounces);
     for (int i = 0; i < bmp.height(); i++) {

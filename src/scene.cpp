@@ -1,5 +1,6 @@
 #include "Scene.hpp"
 #include <cstdlib>
+#include <cmath>
 
 //<3 functions
 double hfn(double x, double y, double z);
@@ -243,6 +244,22 @@ scene_t *scene_init(int x, int y, double zoom)
 	return s;
 }
 
+namespace {
+
+// reflect a vector across a place defined by a surface normal.
+SimpleRaytracer::Vector3 reflection(
+    const SimpleRaytracer::Vector3 &direction,
+    const SimpleRaytracer::Vector3 &surface_normal);
+SimpleRaytracer::Vector3 reflection(
+    const SimpleRaytracer::Vector3 &direction,
+    const SimpleRaytracer::Vector3 &surface_normal)
+{
+    const double f = 2 * direction.dot(surface_normal);
+    return (direction - f * surface_normal);
+}
+
+} // anonymous namespace
+
 namespace SimpleRaytracer {
 
 constexpr double DELTA = 1e-6;
@@ -291,6 +308,7 @@ void Scene::render(int max_depth)
             direction.normalize();
             Ray ray(screen_.get_point(i, j), direction);
             pixel_data_[indexof(i, j)] = render(ray, 0, max_depth);
+            // std::cout << "("<< i << ", "  << j << "): " << screen_.get_point(i, j) << '\n';
         }
     }
     return;
@@ -335,62 +353,51 @@ RGBColor Scene::render(const Ray &ray, int depth, int max_depth) const
     rgb.additive_blend(color_diff); 
 
     if (lambertian > 0) {
-    /*
-        total_lam_factor = 0;
-        for (i = 0; i < scene->nlights; i++) {
-            light_dir = VDUP(scene->lights[i]->origin);
-            VSUB(light_dir, light_dir, ip);
-            light_distance_sq = VDOT(light_dir, light_dir);
-            vnormalize(light_dir);
-            assert(abs(VDOT(light_dir, light_dir) - 1) < delta || abs(VDOT(light_dir, light_dir)) > delta);
-            assert(abs(VDOT(saved_surface_normal, saved_surface_normal) - 1) < delta || abs(VDOT(saved_surface_normal, saved_surface_normal)) > delta);
-            shadow = ray(ip, light_dir);
+        double total_lambertian_factor = 0;
+        
+        for (auto const &light : lights_) {
+            const Vector3 light_vector = light->origin() - perturbed_point;
+            const double light_distance_squared = light_vector.dot(light_vector);
+            Vector3 light_direction = light_vector;
+            light_direction.normalize();
 
-            lam_factor = lambertian_factor(light_dir, saved_surface_normal);
-            if (lam_factor > 0) {
-                intersect_all_objects(&rs, shadow, scene);
-                if (rs.hit == 0 || (rs.t * rs.t >= light_distance_sq)) {
-                    total_lam_factor += lam_factor;
-                    if (ref > 0) {
-                        reflected_light_dir = vreflection(light_dir, saved_surface_normal);
-                        assert(abs(VDOT(reflected_light_dir, reflected_light_dir) - 1) < delta || abs(VDOT(reflected_light_dir, reflected_light_dir)) > delta);
+            Ray shadow(perturbed_point, light_direction);
 
-                        spec_factor = VDOT(reflected_light_dir, sr->direction);
-                        if (spec_factor > 0) {
-                            spec_factor = pow(spec_factor, 100*ref);
-                            spec_factor = spec_factor*ref*scene->lights[i]->intensity;
-                            VSMULT(cvl, scene->lights[i]->color, spec_factor);
-                            assert(cvl->x1 >= 0 && cvl->x2 >= 0 && cvl->x3 >= 0);
-                            color->x1 += (cvl->x1);
-                            color->x2 += (cvl->x2);
-                            color->x3 += (cvl->x3);
+            double current_lambertian_factor = lambertian_factor(light_direction, closest.surface_normal());
+            if (current_lambertian_factor > 0) {
+                size_t shadow_min_idx = 0;
+                Intersection shadow_closest = find_closest_object_along_ray(shadow, shadow_min_idx);
+                if (shadow_closest.hit() == false ||
+                    (shadow_closest.time() * shadow_closest.time() >= light_distance_squared)) {
+                    total_lambertian_factor += current_lambertian_factor;
+                    if (reflectivity > 0) {
+                        const Vector3 reflected_light_direction = reflection(light_direction, closest.surface_normal());
+
+                        double specularity = reflected_light_direction.dot(ray.direction());
+                        if (specularity > 0) {
+                            specularity = std::pow(specularity, 100*reflectivity);
+                            specularity *= reflectivity * light->intensity();
+                            RGBColor composite_light_color = light->color();
+                            composite_light_color.mulitplicative_scale(specularity);
+                            composite_light_color.clamp_values();
+                            rgb.additive_blend(composite_light_color);
                         }
-
-                        delete reflected_light_dir;
                     }
-
                 }
             }
-
-            delete light_dir;
-            delete shadow;
         }
 
-        if (total_lam_factor > 0) {
-            total_lam_factor *= lam;
-            VSMULT(cvl, cv, total_lam_factor);
-            assert(cvl->x1 >= 0 && cvl->x2 >= 0 && cvl->x3 >= 0);
-            color->x1 += (cvl->x1);
-            color->x2 += (cvl->x2);
-            color->x3 += (cvl->x3);
+        if (total_lambertian_factor > 0) {
+            total_lambertian_factor *= lambertian;
+            RGBColor composite_color = object_color;
+            composite_color.mulitplicative_scale(total_lambertian_factor);
+            composite_color.clamp_values();
+            rgb.additive_blend(composite_color);
         }
-    */
     }
 
     if (reflectivity > 0) {
-        auto const direction = ray.direction();
-        const double f = 2 * direction.dot(closest.surface_normal());
-        const Vector3 reflected_direction = direction - f * closest.surface_normal();
+        const Vector3 reflected_direction = reflection(ray.direction(), closest.surface_normal());
         const Ray reflect(perturbed_point, reflected_direction);
         RGBColor reflection_rgb = render(reflect, depth+1, max_depth);
         reflection_rgb.mulitplicative_scale(reflectivity);

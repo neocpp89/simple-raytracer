@@ -25,19 +25,19 @@ double lambertian_factor(const Vector3 &light_direction, const Vector3 &surface_
 class SceneLight
 {
     public:
-        SceneLight(const Point3 &origin, const RGBColor &rgb, const double intensity) :
-            origin_(origin), rgb_(rgb), intensity_(intensity) {}
+        SceneLight(const Point3 &origin, const RGBColor &color, const double intensity) :
+            origin_(origin), color_(color), intensity_(intensity) {}
         virtual ~SceneLight() {}
 
         virtual Vector3 direction_to_light(const Point3 &from) const = 0;
 
         Point3 origin() const { return origin_; }
-        RGBColor rgb() const { return rgb_; }
+        RGBColor color() const { return color_; }
         double intensity() const { return intensity_; }
 
     private:
         Point3 origin_;
-        RGBColor rgb_;
+        RGBColor color_;
         double intensity_;
 };
 
@@ -49,8 +49,8 @@ class ScenePointLight : public SceneLight
 {
     public:
         ScenePointLight(const SceneLight &sl) : SceneLight(sl) {}
-        ScenePointLight(const Point3 &origin, const RGBColor &rgb, const double intensity) :
-            SceneLight(origin, rgb, intensity) {}
+        ScenePointLight(const Point3 &origin, const RGBColor &color, const double intensity) :
+            SceneLight(origin, color, intensity) {}
         Vector3 direction_to_light(const Point3 &from) const;
 
     private:

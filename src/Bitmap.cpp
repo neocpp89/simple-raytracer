@@ -43,9 +43,10 @@ void Bitmap::set_pixel_ij(int i, int j, const RGBColor &c)
     if (j >= width_ || i >= height_ || i < 0 || j < 0) {
         return;
     }
-    data_[i * width_ + j].red = c.r();
-    data_[i * width_ + j].green = c.g();
-    data_[i * width_ + j].blue = c.b();
+    const int image_coordinates_i = height_ - i - 1;
+    data_[image_coordinates_i * width_ + j].red = c.r();
+    data_[image_coordinates_i * width_ + j].green = c.g();
+    data_[image_coordinates_i * width_ + j].blue = c.b();
     return;
 }
 
@@ -54,9 +55,9 @@ void Bitmap::set_pixel(int x, int y, const RGBColor &c)
     if (x >= width_ || y >= height_ || x < 0 || y < 0) {
         return;
     }
-    data_[(bi_.height - y - 1) * bi_.width + x].red = c.r();
-    data_[(bi_.height - y - 1) * bi_.width + x].green = c.g();
-    data_[(bi_.height - y - 1) * bi_.width + x].blue = c.b();
+    data_[y * bi_.width + x].red = c.r();
+    data_[y * bi_.width + x].green = c.g();
+    data_[y * bi_.width + x].blue = c.b();
     return;
 }
 
@@ -65,9 +66,14 @@ RGBColor Bitmap::get_pixel_ij(int i, int j) const
     if (j >= width_ || i >= height_ || i < 0 || j < 0) {
         return RGBColor(0, 0, 0);
     }
-    const int r = data_[i * width_ + j].red;
-    const int g = data_[i * width_ + j].green;
-    const int b = data_[i * width_ + j].blue;
+    /*
+        Bitmaps are actually weird and store image data
+        in regular cartesian coordinates...
+    */
+    const int image_coordinates_i = height_ - i - 1;
+    const int r = data_[image_coordinates_i * width_ + j].red;
+    const int g = data_[image_coordinates_i * width_ + j].green;
+    const int b = data_[image_coordinates_i * width_ + j].blue;
     RGBColor rgb(r, g, b);
     return rgb;
 }
@@ -77,9 +83,9 @@ RGBColor Bitmap::get_pixel(int x, int y) const
     if (x >= width_ || y >= height_ || x < 0 || y < 0) {
         return RGBColor(0, 0, 0);
     }
-    const int r = data_[(bi_.height - y - 1) * bi_.width + x].red;
-    const int g = data_[(bi_.height - y - 1) * bi_.width + x].green;
-    const int b = data_[(bi_.height - y - 1) * bi_.width + x].blue;
+    const int r = data_[y * bi_.width + x].red;
+    const int g = data_[y * bi_.width + x].green;
+    const int b = data_[y * bi_.width + x].blue;
     RGBColor rgb(r, g, b);
     return rgb;
 }
