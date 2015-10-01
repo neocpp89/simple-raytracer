@@ -60,4 +60,29 @@ Intersection Sphere::Intersect(const Ray &ray) const
     return Intersection(hit, t, point, surface_normal);
 }
 
+Intersection Plane::Intersect(const Ray &ray) const
+{
+    const Vector3 direction = ray.direction();
+    const double projected_unit = normal_.Dot(direction);
+    bool hit = true;
+
+    // ray is parallel to plane
+    if (projected_unit == 0) {
+        hit = false;
+        return Intersection(hit);
+    }
+
+    double projected_distance = -(normal_.Dot(ray.origin() - Point3(0,0,0)) + distance_from_origin_);
+    double t = projected_distance / projected_unit;
+
+    if (t < 0) {
+        hit = false;
+        return Intersection(hit);
+    }
+
+    hit = true;
+    Point3 point = ray.origin() + (t * direction);
+    return Intersection(hit, t, point, normal_);
+}
+
 } // namespace simple_raytracer

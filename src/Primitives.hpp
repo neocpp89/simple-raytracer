@@ -79,14 +79,31 @@ class SceneObject
 class Sphere : public SceneObject
 {
     public:
-        Sphere(const Point3 &center, const double radius, const MaterialProperties &properties)
+        Sphere(const Point3 &center, double radius, const MaterialProperties &properties)
             : SceneObject(properties), center_(center), radius_(radius) {}
 
         Intersection Intersect(const Ray &ray) const;
 
     private:
-        const Point3 center_;
-        const double radius_;
+        Point3 center_;
+        double radius_;
+};
+
+/*
+    Another classic object, and also simple to calculate.
+*/
+class Plane : public SceneObject
+{
+    public:
+        Plane(const Vector3 &normal, double distance_from_origin, const MaterialProperties &properties)
+            : SceneObject(properties), normal_(normal),
+            distance_from_origin_(distance_from_origin) {}
+
+        Intersection Intersect(const Ray &ray) const;
+
+    private:
+        Vector3 normal_;
+        double distance_from_origin_;
 };
 
 } // namespace simple_raytracer

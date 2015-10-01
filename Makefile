@@ -10,7 +10,6 @@ SRC = \
 	Primitives.cpp \
 	intersect.cpp \
 	Light.cpp \
-	numeric.cpp \
     Screen.cpp \
 	Scene.cpp
 

@@ -11,8 +11,8 @@ TEST_CASE("Screen Point Generataion", "[assign]") {
     const int c = 5;
     simple_raytracer::Screen screen(tl, tr, bl, r, c);
 
-    REQUIRE(screen.get_point(0,0) == tl);
-    REQUIRE(screen.get_point(1,1) == Point3(-1, 1, 0));
-    REQUIRE(screen.get_point(4,4) == Point3(2, -2, 0));
+    REQUIRE(screen.GetPoint(0,0) == tl);
+    REQUIRE(screen.GetPoint(1,1) == Point3(-1, 1, 0));
+    REQUIRE(screen.GetPoint(4,4) == Point3(2, -2, 0));
 }
 

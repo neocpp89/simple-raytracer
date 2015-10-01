@@ -5,7 +5,6 @@ SET(LIB_SOURCES
         Camera.cpp
         Primitives.cpp
         Light.cpp
-        numeric.cpp
         Screen.cpp
         Scene.cpp)
 ADD_LIBRARY(srt ${LIB_SOURCES})

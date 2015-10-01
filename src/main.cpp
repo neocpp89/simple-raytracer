@@ -48,6 +48,7 @@ int main(int argc, char **argv)
     scene.AddObject(new simple_raytracer::Sphere({120, 12, 0}, 50, {{103,70,255}, 0.5, 0.5}));
     scene.AddObject(new simple_raytracer::Sphere({-110, -12, 0}, 50, {{103,80,255}, 0.5, 0.5}));
     scene.AddObject(new simple_raytracer::Sphere({520, -162, 0}, 50, {{103,100,255}, 0.5, 0.5}));
+    scene.AddObject(new simple_raytracer::Plane({0, 1, 0}, 125, {{180,120,255}, 0.2, 0.8}));
 
     scene.AddLight(new simple_raytracer::ScenePointLight({500, 500, 0}, {255, 255, 255}, 1.0));
     scene.AddLight(new simple_raytracer::ScenePointLight({-500, 500, 0}, {255, 200, 255}, 0.5));
