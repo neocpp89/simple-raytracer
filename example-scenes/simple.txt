@@ -1,8 +1,9 @@
 camera = (0,0,-1000)
 bitmap-file = "simple.bmp"
 bitmap-size = 1024x768
-scene-properties = { bgcolor = (32,32,32) : ambient = 0.1 }
+scene-properties = { bgcolor = (0,0,0) : ambient = 0.1 }
 screen = { top-left = (-50, 37.5, -500) : top-right = (50, 37.5, -500) : bottom-left = (-50, -37.5, -500) }
 add-sphere[ origin = (0,0,0) : radius = 10 : material = { color = (255,0,0) : lambertian = 0.2 : reflectivity = 0.8 }]
 add-sphere[ origin = (-20,0,0) : radius = 5 : material = { color = (0,0,255) : lambertian = 0.7 : reflectivity = 0.3 }]
-add-plane[ normal = (0,1,0) : distance = 100 : material = { color = (0,255,0) : lambertian = 0.9 : reflectivity = 0.1 }]
+add-plane[ normal = (0,1,0) : distance = 55 : material = { color = (0,255,0) : lambertian = 0.9 : reflectivity = 0.1 }]
+add-point-light[ origin = (500,500,-400) : color = (255,255,255) : intensity= 1.0 ]

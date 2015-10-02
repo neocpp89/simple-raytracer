@@ -26,7 +26,7 @@ constexpr double kDelta = 1e-6;
 
 int Scene::IndexOf(int i, int j) const
 {
-    if (i <= 0 || i >= screen_.rows() || j <= 0 || j >= screen_.columns()) {
+    if (i < 0 || i >= screen_.rows() || j < 0 || j >= screen_.columns()) {
         return 0;
     }
     return (i * screen_.columns() + j);
