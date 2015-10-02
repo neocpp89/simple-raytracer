@@ -49,6 +49,9 @@ const std::regex kPlaneInnerRegex(
 const std::regex kPointLightRegex(
     R"raw(\s*add-point-light\s*(\[.*\])\s*)raw",
     std::regex_constants::icase);
+const std::regex kPointLightInnerRegex(
+    R"raw(\s*\[\s*origin\s*=\s*(\(.*\))\s*:\s*color\s*=\s*(\(.*\))\s*:\s*intensity\s*=\s*([^\s]*)\s*\]\s*)raw",
+    std::regex_constants::icase);
 const std::regex kTripletRegex(
     R"raw(\s*\(([^,]*),([^,]*),([^,]*)\))raw",
     std::regex_constants::icase);
@@ -66,6 +69,7 @@ simple_raytracer::SceneProperties ParseSceneProperties(const std::string &scene_
 simple_raytracer::MaterialProperties ParseMaterialProperties(const std::string &material_properties_string);
 simple_raytracer::Sphere ParseSphere(const std::string &sphere_string);
 simple_raytracer::Plane ParsePlane(const std::string &sphere_string);
+simple_raytracer::ScenePointLight ParsePointLight(const std::string &point_light_string);
 
 template <typename T, typename Member>
 T ParseTriplet(const std::string &triplet_string)
@@ -162,6 +166,23 @@ simple_raytracer::Plane ParsePlane(const std::string &plane_string)
     return simple_raytracer::Plane(normal, distance, material_properties);
 }
 
+simple_raytracer::ScenePointLight ParsePointLight(const std::string &point_light_string)
+{
+    std::smatch result;
+    std::regex_search(point_light_string, result, kPointLightInnerRegex);
+    if (result.size() != 4) {
+        throw ParsingError("Can't process plane string : ["+point_light_string+"].\n");
+    }
+
+    simple_raytracer::Point3 origin = ParseTriplet<simple_raytracer::Point3>(result[1]);
+    simple_raytracer::RGBColor color = ParseTriplet<simple_raytracer::RGBColor, int>(result[2]);
+    double intensity = 0;
+    std::istringstream iss(result[3]);
+    iss >> intensity;
+
+    return simple_raytracer::ScenePointLight(origin, color, intensity);
+}
+
 
 /*
     Ugly, large, and fragile parsing function. Refactor later.
@@ -255,6 +276,11 @@ simple_raytracer::Scene SceneFileParser::GetScene()
                 throw ParsingError("Can't process plane: ["+line+"].\n");
             }
             planes.push_back(ParsePlane(result[1]));
+        } else if (std::regex_search(line, result, kPointLightRegex)) {
+            if (result.size() != 2) {
+                throw ParsingError("Can't process point light: ["+line+"].\n");
+            }
+            point_lights.push_back(ParsePointLight(result[1]));
         } else {
             throw ParsingError("Unknown line: ["+line+"].\n");
         }
