@@ -1,4 +1,7 @@
-SET(SOURCES main.cpp)
+SET(SOURCES
+        main.cpp
+        Parser.cpp
+    )
 ADD_EXECUTABLE(simple-raytracer ${SOURCES})
 TARGET_INCLUDE_DIRECTORIES(simple-raytracer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../libsrt/)
 TARGET_INCLUDE_DIRECTORIES(simple-raytracer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

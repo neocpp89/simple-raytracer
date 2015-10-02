@@ -10,13 +10,15 @@
 #include "Scene.hpp"
 #include "Screen.hpp"
 
+#include "Parser.hpp"
+
 /*
     This is a builtin demo scene.
 */
 simple_raytracer::Scene DemoScene(int width, int height);
 simple_raytracer::Scene DemoScene(int width, int height)
 {
-	simple_raytracer::Camera camera({0, 0, -1000});
+    simple_raytracer::Camera camera({0, 0, -1000});
     simple_raytracer::SceneProperties scene_props({0,0,0}, 0.1);
     simple_raytracer::Point3 top_left({-160, 120, -200});
     simple_raytracer::Point3 top_right({160, 120, -200});
@@ -40,21 +42,8 @@ simple_raytracer::Scene DemoScene(int width, int height)
     return scene;
 }
 
-int main(int argc, char **argv)
+void DoDemo(const std::string &filename, int width, int height)
 {
-    if (argc != 2 && argc != 4) {
-        std::cout << "usage: " << argv[0] << " [CONFIG] or [BITMAP-FILE WIDTH HEIGHT]";
-        return 0;
-    }
-    const std::string bmp_filename(argv[1]);
-    const int width = std::stoi(argv[2]);
-    const int height = std::stoi(argv[3]);
-
-    if (width <= 0 || height <= 0) {
-        std::cout << "Need strictly positive sizes for image dimensions.\n";
-        return 0;
-    }
-
     simple_raytracer::Bitmap bmp(width, height);
     simple_raytracer::Scene scene = DemoScene(width, height);
 
@@ -66,7 +55,38 @@ int main(int argc, char **argv)
         }
     }
 
-    bmp.WriteFile(bmp_filename);
-	return 0;
+    bmp.WriteFile(filename);
+    return;
+}
+
+void RenderSceneFile(const std::string &filename)
+{
+    std::cout << filename;
+    std::ifstream ifs(filename);
+    driver::SceneFileParser parser(ifs);
+    /*
+        Somewhat of a misnomer, this actually will do the rendering too.
+    */
+    simple_raytracer::Scene scene = parser.GetScene();
+    return;
+}
+
+int main(int argc, char **argv)
+{
+    if (argc != 2 && argc != 4) {
+        std::cout << "usage: " << argv[0] << " [CONFIG] or [BITMAP-FILE WIDTH HEIGHT]";
+        return 0;
+    }
+
+    if (argc == 4) {
+        std::string bmp_filename(argv[1]);
+        int width = std::stoi(argv[2]);
+        int height = std::stoi(argv[3]);
+        DoDemo(bmp_filename, width, height);
+    } else if (argc == 2) {
+        std::string scene_filename(argv[1]);
+        RenderSceneFile(scene_filename);
+    }
+    return 0;
 }
 
