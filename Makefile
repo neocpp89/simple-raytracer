@@ -11,7 +11,9 @@ LIBSRC = \
     Screen.cpp \
 	Scene.cpp
 
-DRIVERSRC = main.cpp
+DRIVERSRC = \
+    main.cpp \
+    Parser.cpp
 
 LIBSRCDIR = src/libsrt/
 DRIVERSRCDIR = src/driver/

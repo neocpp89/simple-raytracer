@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <vector>
 
+#include "Bitmap.hpp"
 #include "Parser.hpp"
 
 namespace driver {
@@ -33,8 +34,20 @@ const std::regex kScreenInnerRegex(
 const std::regex kSphereRegex(
     R"raw(\s*add-sphere\s*(\[.*\])\s*)raw",
     std::regex_constants::icase);
+const std::regex kSphereInnerRegex(
+    R"raw(\s*\[\s*origin\s*=\s*(\(.*\))\s*:\s*radius\s*=\s*([^\s]*)\s*:\s*material\s*=\s*(\{.*\})\s*\]\s*)raw",
+    std::regex_constants::icase);
 const std::regex kMaterialPropertiesRegex(
     R"raw(\s*\{\s*color\s*=\s*(\(.*\))\s*:\s*lambertian\s*=\s*([^\s]*)\s*:\s*reflectivity\s*=\s*([^\s]*)\s*\}\s*)raw",
+    std::regex_constants::icase);
+const std::regex kPlaneRegex(
+    R"raw(\s*add-plane\s*(\[.*\])\s*)raw",
+    std::regex_constants::icase);
+const std::regex kPlaneInnerRegex(
+    R"raw(\s*\[\s*normal\s*=\s*(\(.*\))\s*:\s*distance\s*=\s*([^\s]*)\s*:\s*material\s*=\s*(\{.*\})\s*\]\s*)raw",
+    std::regex_constants::icase);
+const std::regex kPointLightRegex(
+    R"raw(\s*add-point-light\s*(\[.*\])\s*)raw",
     std::regex_constants::icase);
 const std::regex kTripletRegex(
     R"raw(\s*\(([^,]*),([^,]*),([^,]*)\))raw",
@@ -52,6 +65,7 @@ T ParseTriplet(const std::string &triplet_string);
 simple_raytracer::SceneProperties ParseSceneProperties(const std::string &scene_property_string);
 simple_raytracer::MaterialProperties ParseMaterialProperties(const std::string &material_properties_string);
 simple_raytracer::Sphere ParseSphere(const std::string &sphere_string);
+simple_raytracer::Plane ParsePlane(const std::string &sphere_string);
 
 template <typename T, typename Member>
 T ParseTriplet(const std::string &triplet_string)
@@ -83,6 +97,7 @@ simple_raytracer::SceneProperties ParseSceneProperties(const std::string &scene_
     std::smatch result;
     std::regex_search(scene_property_string, result, kScenePropertiesInnerRegex);
     if (result.size() != 3) {
+        throw ParsingError("Can't process scene properties string : ["+scene_property_string+"].\n");
     }
 
     simple_raytracer::RGBColor bgcolor = ParseTriplet<simple_raytracer::RGBColor, int>(result[1]);
@@ -98,6 +113,7 @@ simple_raytracer::MaterialProperties ParseMaterialProperties(const std::string &
     std::smatch result;
     std::regex_search(material_properties_string, result, kMaterialPropertiesRegex);
     if (result.size() != 4) {
+        throw ParsingError("Can't process material properties string : ["+material_properties_string+"].\n");
     }
 
     simple_raytracer::RGBColor color = ParseTriplet<simple_raytracer::RGBColor, int>(result[1]);
@@ -115,8 +131,9 @@ simple_raytracer::MaterialProperties ParseMaterialProperties(const std::string &
 simple_raytracer::Sphere ParseSphere(const std::string &sphere_string)
 {
     std::smatch result;
-    std::regex_search(sphere_string, result, kSphereRegex);
-    if (result.size() != 3) {
+    std::regex_search(sphere_string, result, kSphereInnerRegex);
+    if (result.size() != 4) {
+        throw ParsingError("Can't process sphere string : ["+sphere_string+"].\n");
     }
 
     simple_raytracer::Point3 origin = ParseTriplet<simple_raytracer::Point3>(result[1]);
@@ -126,6 +143,23 @@ simple_raytracer::Sphere ParseSphere(const std::string &sphere_string)
     simple_raytracer::MaterialProperties material_properties = ParseMaterialProperties(result[3]);
 
     return simple_raytracer::Sphere(origin, radius, material_properties);
+}
+
+simple_raytracer::Plane ParsePlane(const std::string &plane_string)
+{
+    std::smatch result;
+    std::regex_search(plane_string, result, kPlaneInnerRegex);
+    if (result.size() != 4) {
+        throw ParsingError("Can't process plane string : ["+plane_string+"].\n");
+    }
+
+    simple_raytracer::Vector3 normal = ParseTriplet<simple_raytracer::Vector3>(result[1]);
+    double distance = 0;
+    std::istringstream iss(result[2]);
+    iss >> distance;
+    simple_raytracer::MaterialProperties material_properties = ParseMaterialProperties(result[3]);
+
+    return simple_raytracer::Plane(normal, distance, material_properties);
 }
 
 
@@ -154,6 +188,9 @@ simple_raytracer::Scene SceneFileParser::GetScene()
     int bitmap_height = 1;
 
     simple_raytracer::SceneProperties scene_properties;
+    std::vector<simple_raytracer::Sphere> spheres;
+    std::vector<simple_raytracer::Plane> planes;
+    std::vector<simple_raytracer::ScenePointLight> point_lights;
 
     std::string line;
     while (std::getline(is_, line)) {
@@ -187,7 +224,7 @@ simple_raytracer::Scene SceneFileParser::GetScene()
             iss.str(result[2]);
             iss.clear();
             iss >> bitmap_height;
-            got_screen = true;
+            got_dimensions = true;
         } else if (std::regex_search(line, result, kScenePropertiesRegex)) {
             if (result.size() != 2) {
                 throw ParsingError("Can't process scene properties: ["+line+"].\n");
@@ -208,6 +245,16 @@ simple_raytracer::Scene SceneFileParser::GetScene()
             screen_top_right = ParseTriplet<simple_raytracer::Point3>(inner_result[2]);
             screen_bottom_left = ParseTriplet<simple_raytracer::Point3>(inner_result[3]);
             got_screen = true;
+        } else if (std::regex_search(line, result, kSphereRegex)) {
+            if (result.size() != 2) {
+                throw ParsingError("Can't process sphere: ["+line+"].\n");
+            }
+            spheres.push_back(ParseSphere(result[1]));
+        } else if (std::regex_search(line, result, kPlaneRegex)) {
+            if (result.size() != 2) {
+                throw ParsingError("Can't process plane: ["+line+"].\n");
+            }
+            planes.push_back(ParsePlane(result[1]));
         } else {
             throw ParsingError("Unknown line: ["+line+"].\n");
         }
@@ -219,6 +266,22 @@ simple_raytracer::Scene SceneFileParser::GetScene()
         throw ParsingError("Bitmap Dimensions must be >= 1 each.\n");
     }
 
+    if (!got_camera) {
+        throw ParsingError("Missing required configuration information: camera.\n");
+    }
+    if (!got_screen) {
+        throw ParsingError("Missing required configuration information: screen.\n");
+    }
+    if (!got_scene_properties) {
+        throw ParsingError("Missing required configuration information: scene-properties.\n");
+    }
+    if (!got_filename) {
+        throw ParsingError("Missing required configuration information: filename.\n");
+    }
+    if (!got_dimensions) {
+        throw ParsingError("Missing required configuration information: dimensions.\n");
+    }
+
     std::cout << "Parsed:\n";
     std::cout << "  Camera: " << camera_origin << '\n';
     std::cout << "  Bitmap File: \"" << filename << "\"\n";
@@ -227,6 +290,26 @@ simple_raytracer::Scene SceneFileParser::GetScene()
     simple_raytracer::Camera camera(camera_origin);
     simple_raytracer::Screen screen(screen_top_left, screen_top_right, screen_bottom_left, bitmap_height, bitmap_width);
     simple_raytracer::Scene scene(camera_origin, screen, scene_properties);
+
+    for (auto const &s : spheres) {
+        scene.AddObject(new simple_raytracer::Sphere(s));
+    }
+    for (auto const &p : planes) {
+        scene.AddObject(new simple_raytracer::Plane(p));
+    }
+    for (auto const &l : point_lights) {
+        scene.AddLight(new simple_raytracer::ScenePointLight(l));
+    }
+
+    simple_raytracer::Bitmap bmp(bitmap_width, bitmap_height);
+    const int max_bounces = 32;
+    scene.Render(max_bounces);
+    for (int i = 0; i < bmp.height(); i++) {
+        for (int j = 0; j < bmp.width(); j++) {
+            bmp.SetPixelImageCoordinates(i, j, scene.GetPixel(i, j));
+        }
+    }
+    bmp.WriteFile(filename);
 
     return scene;
 }
