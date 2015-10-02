@@ -61,9 +61,9 @@ void DoDemo(const std::string &filename, int width, int height)
 
 void RenderSceneFile(const std::string &filename)
 {
-    std::cout << filename;
     std::ifstream ifs(filename);
     driver::SceneFileParser parser(ifs);
+
     /*
         Somewhat of a misnomer, this actually will do the rendering too.
     */

@@ -1,0 +1,12 @@
+camera = (0,0,-180)
+bitmap-file = "mirrors.bmp"
+bitmap-size = 640x480
+scene-properties = { bgcolor = (0,0,0) : ambient = 0.1 }
+screen = { top-left = (-50, 37.5, -50) : top-right = (50, 37.5, -50) : bottom-left = (-50, -37.5, -50) }
+add-sphere[ origin = (200,0,0) : radius = 90 : material = { color = (255,0,0) : lambertian = 0.3 : reflectivity = 0.7 }]
+add-sphere[ origin = (-200,0,0) : radius = 90 : material = { color = (0,0,255) : lambertian = 0.7 : reflectivity = 0.3 }]
+# add-plane[ normal = (0,1,0) : distance = 37.5 : material = { color = (0,255,0) : lambertian = 0.9 : reflectivity = 0.1 }]
+add-plane[ normal = (0,0,1) : distance = 200 : material = { color = (0,0,0) : lambertian = 0.01 : reflectivity = 0.99 }]
+add-plane[ normal = (0,0,-1) : distance = 200 : material = { color = (0,0,0) : lambertian = 0.01 : reflectivity = 0.99 }]
+add-point-light[ origin = (400,400,-20) : color = (255,255,255) : intensity= 1.0 ]
+add-point-light[ origin = (-400,-400,20) : color = (255,255,255) : intensity= 1.0 ]

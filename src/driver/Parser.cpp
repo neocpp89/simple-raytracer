@@ -228,7 +228,6 @@ simple_raytracer::Scene SceneFileParser::GetScene()
                 throw ParsingError("Can't process camera line: ["+line+"].\n");
             }
             camera_origin = ParseTriplet<simple_raytracer::Point3>(result[1]);
-            std::cout << camera_origin << '\n';
             got_camera = true;
         } else if (std::regex_search(line, result, kFilenameRegex)) {
             if (result.size() != 2) {
@@ -285,7 +284,6 @@ simple_raytracer::Scene SceneFileParser::GetScene()
             throw ParsingError("Unknown line: ["+line+"].\n");
         }
 
-        std::cout << line << '\n';
     }
 
     if (bitmap_width < 1 || bitmap_height < 1) {
@@ -307,11 +305,6 @@ simple_raytracer::Scene SceneFileParser::GetScene()
     if (!got_dimensions) {
         throw ParsingError("Missing required configuration information: dimensions.\n");
     }
-
-    std::cout << "Parsed:\n";
-    std::cout << "  Camera: " << camera_origin << '\n';
-    std::cout << "  Bitmap File: \"" << filename << "\"\n";
-    std::cout << "  Bitmap Dimensions: (" << bitmap_width << ", " << bitmap_height << ")\n";
 
     simple_raytracer::Camera camera(camera_origin);
     simple_raytracer::Screen screen(screen_top_left, screen_top_right, screen_bottom_left, bitmap_height, bitmap_width);
