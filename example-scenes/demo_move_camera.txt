@@ -1,0 +1,24 @@
+# Absolute minimum needed to generate a scene.
+# Note that blank lines are ignored, as well as lines starting with '#'
+camera = (0,2000,-2000)
+bitmap-file = "demo_move_camera.bmp"
+bitmap-size = 1024x768
+scene-properties = { bgcolor = (0,0,0) : ambient = 0.1 }
+screen = { top-left = (-415, 640, -200) : top-right = (415, 640, -200) : bottom-left = (-415, 200, -640) }
+
+# Spheres go here. 
+add-sphere[ origin = (-160,120,5) : radius = 100 : material = { color = (32,120,32) : lambertian = 0.5 : reflectivity = 0.5 }]
+add-sphere[ origin = (200,0,3) : radius = 77 : material = { color = (103,0,255) : lambertian = 0.5 : reflectivity = 0.5 }]
+add-sphere[ origin = (30,143,61) : radius = 50 : material = { color = (32,32,255) : lambertian = 0.3 : reflectivity = 0.7 }]
+add-sphere[ origin = (-20,-70,-12) : radius = 55 : material = { color = (255,32,32) : lambertian = 0.7 : reflectivity = 0.3 }]
+add-sphere[ origin = (100,52,5) : radius = 23 : material = { color = (103,70,255) : lambertian = 0.5 : reflectivity = 0.5 }]
+add-sphere[ origin = (-110,-12,12) : radius = 40 : material = { color = (240,240,32) : lambertian = 0.1 : reflectivity = 0.9 }]
+add-sphere[ origin = (80,-105,63) : radius = 12 : material = { color = (32,240,32) : lambertian = 0.8 : reflectivity = 0.2 }]
+
+# Planes here
+add-plane[ normal = (0,1,0) : distance = 125 : material = { color = (128,77,180) : lambertian = 0.4 : reflectivity = 0.6 }]
+
+# Point light sources here
+add-point-light[ origin = (1000,1000,-400) : color = (255,255,255) : intensity= 1.0 ]
+add-point-light[ origin = (-500,500,0) : color = (255,255,255) : intensity= 1.0 ]
+add-point-light[ origin = (-700,700,400) : color = (255,255,255) : intensity= 1.0 ]
