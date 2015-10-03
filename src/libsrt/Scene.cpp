@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "Scene.hpp"
 #include "Vector3.hpp"
 #include "Primitives.hpp"
@@ -26,8 +28,17 @@ constexpr double kDelta = 1e-6;
 
 int Scene::IndexOf(int i, int j) const
 {
-    if (i < 0 || i >= screen_.rows() || j < 0 || j >= screen_.columns()) {
-        return 0;
+    if (i >= screen_.rows() || j >= screen_.columns()) {
+        std::string msg = "Attempted screen access of element ("+
+            std::to_string(i)+", "+std::to_string(j)+") but screen size has "+
+            std::to_string(screen_.rows())+" rows and "+std::to_string(screen_.columns())+" columns.\n";
+        throw std::out_of_range(msg);
+    }
+    if (i < 0 || j < 0) {
+        std::string msg = "Attempted screen access of element ("+
+            std::to_string(i)+", "+std::to_string(j)+") but indices must be"+
+            "positive.\n";
+        throw std::out_of_range(msg);
     }
     return (i * screen_.columns() + j);
 }
