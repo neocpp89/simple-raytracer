@@ -1,7 +1,9 @@
 #ifndef SRT_BITMAP_HPP_
 #define SRT_BITMAP_HPP_
+#include <stdexcept>
 #include <string>
 #include <vector>
+
 #include "bitmap.h"
 #include "Color.hpp"
 
@@ -29,6 +31,8 @@ class Bitmap
         /*
             Access bitmap data in image coordinates i,j
             increasing to the right and down from the top-left corner.
+
+            These will throw if you give them bad coordinates.
         */
         void SetPixelImageCoordinates(int i, int j, const RGBColor &c);
         RGBColor GetPixelImageCoordinates(int i, int j) const;
@@ -54,6 +58,13 @@ class Bitmap
         biheader_t bi_;
         int datasize_;
         int filesize_;
+
+        /*
+            These are helper functions that throw a std::out_of_range exception
+            if the coordinates are out of range, otherwise they do nothing.
+        */
+        void CheckImageCoordinates(int i, int j) const;
+        void CheckCoordinates(int x, int y) const;
 };
 
 } // namespace simple_raytracer

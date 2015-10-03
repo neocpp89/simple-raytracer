@@ -1,6 +1,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 #include <cstring>
 #include <cmath>
@@ -38,11 +39,43 @@ Bitmap::Bitmap(int width, int height) : width_(width), height_(height), data_(wi
     return;
 }
 
+void Bitmap::CheckImageCoordinates(int i, int j) const
+{
+    if (j >= width_ || i >= height_) {
+        std::string msg = "Attempted bitmap access of image element ("+
+            std::to_string(i)+", "+std::to_string(j)+") but bitmap size has "+
+            std::to_string(height_)+" rows and "+std::to_string(width_)+" columns.\n";
+        throw std::out_of_range(msg);
+    }
+    if (i < 0 || j < 0) {
+        std::string msg = "Attempted bitmap access of image element ("+
+            std::to_string(i)+", "+std::to_string(j)+") but indices must be"+
+            "positive.\n";
+        throw std::out_of_range(msg);
+    }
+    return;
+}
+
+void Bitmap::CheckCoordinates(int x, int y) const
+{
+    if (x >= width_ || y >= height_) {
+        std::string msg = "Attempted bitmap access of cartesian element ("+
+            std::to_string(x)+", "+std::to_string(y)+") but bitmap size has "+
+            std::to_string(height_)+" rows and "+std::to_string(width_)+" columns.\n";
+        throw std::out_of_range(msg);
+    }
+    if (x < 0 || y < 0) {
+        std::string msg = "Attempted bitmap access of cartesian element ("+
+            std::to_string(x)+", "+std::to_string(y)+") but indices must be"+
+            "positive.\n";
+        throw std::out_of_range(msg);
+    }
+    return;
+}
+
 void Bitmap::SetPixelImageCoordinates(int i, int j, const RGBColor &c)
 {
-    if (j >= width_ || i >= height_ || i < 0 || j < 0) {
-        return;
-    }
+    CheckImageCoordinates(i, j);
     const int image_coordinates_i = height_ - i - 1;
     data_[image_coordinates_i * width_ + j].red = c.r();
     data_[image_coordinates_i * width_ + j].green = c.g();
@@ -52,9 +85,7 @@ void Bitmap::SetPixelImageCoordinates(int i, int j, const RGBColor &c)
 
 void Bitmap::SetPixel(int x, int y, const RGBColor &c)
 {
-    if (x >= width_ || y >= height_ || x < 0 || y < 0) {
-        return;
-    }
+    CheckCoordinates(x, y);
     data_[y * bi_.width + x].red = c.r();
     data_[y * bi_.width + x].green = c.g();
     data_[y * bi_.width + x].blue = c.b();
@@ -63,9 +94,7 @@ void Bitmap::SetPixel(int x, int y, const RGBColor &c)
 
 RGBColor Bitmap::GetPixelImageCoordinates(int i, int j) const
 {
-    if (j >= width_ || i >= height_ || i < 0 || j < 0) {
-        return RGBColor(0, 0, 0);
-    }
+    CheckImageCoordinates(i, j);
     /*
         Bitmaps are actually weird and store image data
         in regular cartesian coordinates...
@@ -83,9 +112,7 @@ RGBColor Bitmap::GetPixelImageCoordinates(int i, int j) const
 
 RGBColor Bitmap::GetPixel(int x, int y) const
 {
-    if (x >= width_ || y >= height_ || x < 0 || y < 0) {
-        return RGBColor(0, 0, 0);
-    }
+    CheckCoordinates(x, y);
     const int r = data_[y * bi_.width + x].red;
     const int g = data_[y * bi_.width + x].green;
     const int b = data_[y * bi_.width + x].blue;
