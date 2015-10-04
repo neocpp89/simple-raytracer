@@ -46,6 +46,14 @@ It takes about 5.5 seconds on my desktop with an i5-2500k running Xubuntu 15.04.
 You can change the filename, and the vertical and horizontal dimensions.
 The aspect ratio of the demo screen is 4:3, so picking other aspect ratios will cause the scene to look skewed when viewing the bitmap unless the pixels are not square.
 
+You can also the run the program as
+
+    simple-raytracer scene-file.txt
+
+which will attempt to parse `scene-file.txt` and generate the output as specified in that file.
+
+In either case, the program is not chatty -- that is, if nothing goes wrong, it will not produce any output except the bitmap file itself.
+
 Making Scenes
 -------------
 
@@ -69,7 +77,7 @@ A simple example:
     scene-properties = { bgcolor = (0,0,0) : ambient = 0.1 }
     screen = { top-left = (-50, 37.5, -500) : top-right = (50, 37.5, -500) : bottom-left = (-50, -37.5, -500) }
 
-    # Here we add a couple of spheres, a plane, and a light source
+    # Here we add a sphere, a plane, and a light source
     add-sphere[ origin = (0,0,0) : radius = 10 : material = { color = (255,0,0) : lambertian = 0.2 : reflectivity = 0.8 }]
     add-plane[ normal = (0,1,0) : distance = 55 : material = { color = (0,255,0) : lambertian = 0.9 : reflectivity = 0.1 }]
     add-point-light[ origin = (500,500,-400) : color = (255,255,255) : intensity= 1.0 ]
