@@ -1,7 +1,6 @@
 # Project: simple-raytracer
-CC = g++
 BIN = simple-raytracer
-CFLAGS = -O3 -Wall -std=c++11 -march=native -I $(LIBSRCDIR) -I $(DRIVERSRCDIR)
+CXXFLAGS += -O3 -Wall -std=c++11 -march=native -I $(LIBSRCDIR) -I $(DRIVERSRCDIR)
 LIBSRC = \
 	Bitmap.cpp \
 	Camera.cpp \
@@ -38,4 +37,4 @@ $(DOXYCONF): $(FP_LIBSRC) $(FP_DRIVERSRC)
 	doxygen -g $(DOXYCONF)
 
 $(BIN): $(FP_LIBSRC) $(FP_DRIVERSRC)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^
